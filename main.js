@@ -1,0 +1,104 @@
+var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
+StellarSdk.Network.useTestNetwork();
+
+var transaction;
+
+function buildTransaction() {
+  var sourceSecretKey = document.getElementById('secretKey').value
+  var jsonPayload = document.getElementById('jsonPayload').value;
+
+  var sourceKeypair = StellarSdk.Keypair.fromSecret(sourceSecretKey);
+  var sourcePublicKey = sourceKeypair.publicKey();
+
+  server.loadAccount(sourcePublicKey)
+    .then(function (account) {
+      var transactionBuilder = new StellarSdk.TransactionBuilder(account);
+
+      var flatJson = JSON.flatten(JSON.parse(jsonPayload));
+
+      Object.keys(flatJson).forEach(function (key) {
+        transactionBuilder.addOperation(StellarSdk.Operation.manageData({
+          name: key,
+          value: flatJson[key]
+        }));
+      })
+
+      transaction = transactionBuilder.build();
+
+      transaction.sign(sourceKeypair);
+
+      console.log('Transaction XDR: ');
+      console.log(transaction.toEnvelope().toXDR('base64'));
+      console.log();
+    })
+    .catch(function (e) {
+      console.error(e);
+    });
+}
+
+function sendTransaction() {
+  console.log('Sending transaction...')
+  server.submitTransaction(transaction)
+    .then(function (transactionResult) {
+      console.log('\nSuccess! View the transaction at: ');
+      console.log(transactionResult._links.transaction.href);
+    })
+    .catch(function (err) {
+      console.log('An error has occured:');
+      console.log(err);
+    });
+}
+
+JSON.flatten = function (data) {
+  var result = {};
+
+  function recurse(cur, prop) {
+    if (Object(cur) !== cur) {
+      result[prop] = cur;
+    } else if (Array.isArray(cur)) {
+      for (var i = 0, l = cur.length; i < l; i++)
+        recurse(cur[i], prop + "[" + i + "]");
+      if (l == 0) result[prop] = [];
+    } else {
+      var isEmpty = true;
+      for (var p in cur) {
+        isEmpty = false;
+        recurse(cur[p], prop ? prop + "." + p : p);
+      }
+      if (isEmpty && prop) result[prop] = {};
+    }
+  }
+  recurse(data, "");
+  return result;
+};
+
+JSON.unflatten = function (data) {
+  "use strict";
+  if (Object(data) !== data || Array.isArray(data)) return data;
+  var regex = /\.?([^.\[\]]+)|\[(\d+)\]/g,
+    resultholder = {};
+  for (var p in data) {
+    var cur = resultholder,
+      prop = "",
+      m;
+    while (m = regex.exec(p)) {
+      cur = cur[prop] || (cur[prop] = (m[2] ? [] : {}));
+      prop = m[2] || m[1];
+    }
+    cur[prop] = data[p];
+  }
+  return resultholder[""] || resultholder;
+};
+
+document.addEventListener('DOMContentLoaded', function () {
+  var testJson = JSON.stringify({
+    "test": "test1",
+    "test2": [{
+      "test3": "test3",
+      "test4": "test4",
+      "test4": "test4"
+    }]
+  }, null, '  ');
+
+  document.getElementById('jsonPayload').value = testJson;
+}, false);
