@@ -2,15 +2,13 @@ var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 StellarSdk.Network.useTestNetwork();
 
 var transaction;
+var publicKey;
 
 function buildTransaction() {
-  var sourceSecretKey = document.getElementById('secretKey').value
+  publicKey = document.getElementById('publicKey').value;
   var jsonPayload = document.getElementById('jsonPayload').value;
 
-  var sourceKeypair = StellarSdk.Keypair.fromSecret(sourceSecretKey);
-  var sourcePublicKey = sourceKeypair.publicKey();
-
-  server.loadAccount(sourcePublicKey)
+  server.loadAccount(publicKey)
     .then(function (account) {
       var transactionBuilder = new StellarSdk.TransactionBuilder(account);
 
@@ -25,8 +23,6 @@ function buildTransaction() {
 
       transaction = transactionBuilder.build();
 
-      transaction.sign(sourceKeypair);
-
       console.log('Transaction XDR: ');
       console.log(transaction.toEnvelope().toXDR('base64'));
       console.log();
@@ -37,11 +33,20 @@ function buildTransaction() {
 }
 
 function sendTransaction() {
+  console.log('Signing transaction using secret key...');
+
+  var sourceSecretKey = document.getElementById('secretKey').value
+  var sourceKeypair = StellarSdk.Keypair.fromSecret(sourceSecretKey);
+
+  transaction.sign(sourceKeypair);
+
   console.log('Sending transaction...')
   server.submitTransaction(transaction)
     .then(function (transactionResult) {
       console.log('\nSuccess! View the transaction at: ');
       console.log(transactionResult._links.transaction.href);
+      console.log('See account details at: ')
+      console.log('https://testnet.steexp.com/account/' + publicKey)
     })
     .catch(function (err) {
       console.log('An error has occured:');

@@ -16,3 +16,7 @@ input[type=button] {
     margin: 10px 0;
     font-size: 15px;
 }
+
+body a {
+    display: block;
+}
