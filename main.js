@@ -49,6 +49,28 @@ function sendTransaction() {
     });
 }
 
+function getTransactionData() {
+  var publicKey = document.getElementById('publicKey').value;
+
+  server.loadAccount(publicKey)
+    .then(function (account) {
+      console.log('Account Loaded');
+
+      var data = account.data_attr;
+
+      Object.keys(data).forEach(function (key) {
+        var encodedValue = data[key];
+        var decodedValue = b64DecodeUnicode(encodedValue)
+
+        data[key] = decodedValue;
+      });
+
+      var unflattenedJson = JSON.unflatten(data);
+
+      document.getElementById('jsonResult').value = JSON.stringify(unflattenedJson, null, '  ');
+    });
+}
+
 JSON.flatten = function (data) {
   var result = {};
 
@@ -89,6 +111,13 @@ JSON.unflatten = function (data) {
   }
   return resultholder[""] || resultholder;
 };
+
+function b64DecodeUnicode(str) {
+  // Going backwards: from bytestream, to percent-encoding, to original string.
+  return decodeURIComponent(atob(str).split('').map(function (c) {
+    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+  }).join(''));
+}
 
 document.addEventListener('DOMContentLoaded', function () {
   var testJson = JSON.stringify({
