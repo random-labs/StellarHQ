@@ -71,7 +71,9 @@ define([
               data[key] = decodedValue;
             });
 
-            document.getElementById('jsonResult').value = JSON.stringify(data, null, '  ');
+            var data = util.unflatten(data);
+
+            document.getElementById('result').value = JSON.stringify(data, null, '  ');
           });
       }
     }

@@ -1,11 +1,21 @@
-define(['StellarSdk'], function (StellarSdk) {
+define(['StellarSdk', 'util'], function (StellarSdk, util) {
 
   function Transaction(account) {
     var transactionBuilder = new StellarSdk.TransactionBuilder(account);
 
     this.buildTransaction = function () {
-      var payload = document.getElementById('jsonPayload').value;
+      var payload = document.getElementById('payload').value;
 
+      if (util.isJson(payload)) {
+        buildDataFromJson(payload);
+      } else {
+        buildData(payload);
+      }
+
+      return transactionBuilder.build();
+    }
+
+    function buildData(payload) {
       var splitPayload = payload.split('\n');
 
       for (let i = 0; i < splitPayload.length; i += 2) {
@@ -17,8 +27,17 @@ define(['StellarSdk'], function (StellarSdk) {
           value: value
         }));
       }
+    }
 
-      return transactionBuilder.build();
+    function buildDataFromJson(payload) {
+      var flatJson = util.flatten(JSON.parse(payload));
+
+      Object.keys(flatJson).forEach(function (key) {
+        transactionBuilder.addOperation(StellarSdk.Operation.manageData({
+          name: key,
+          value: flatJson[key]
+        }));
+      })
     }
   }
 

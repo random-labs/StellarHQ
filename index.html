@@ -11,8 +11,33 @@
 </head>
 
 <body>
-  <a href="data.html">Set Account Data</a>
-  <a href="json.html">Set Account Data using JSON</a>
+  <div>
+    <div class="header">Public Key</div>
+    <input type="text" id="publicKey">
+    <input type="button" id="connectAccount" class="online" value="Connect">
+    <div class="header">Next Sequence Number</div>
+    <input type="text" id="sequenceNumber">
+  </div>
+  <div>
+    <div class="header">Payload</div>
+    <div>Enter key/value one per line</div>
+    <div>Accepts Json Objects</div>
+    <textarea id="payload"></textarea>
+  </div>
+  <input type="button" id="createTransaction" value="Create Transaction">
+
+  <div>
+    <div class="header">Secret Key</div>
+    <input type="text" id="secretKey">
+  </div>
+  <input type="button" id="signTransaction" value="Sign Transaction">
+  <input type="button" id="submitTransaction" class="online" value="Submit Transaction">
+  <div class="online">
+    <h2>Read Account Data</h2>
+    <div class="header">Account Data</div>
+    <textarea id="result"></textarea>
+    <input type="button" id="getAccountData" value="Get Data">
+  </div>
 </body>
 
 </html>
