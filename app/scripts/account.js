@@ -1,5 +1,5 @@
 define([
-    'StellarSdk',
+    'stellar-sdk',
     'stellar',
     'util',
     'transaction'

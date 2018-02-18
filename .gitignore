@@ -1,0 +1,4 @@
+bower_components/
+
+!bower_components/**/*.min.js
+!bower_components/requirejs/*.js

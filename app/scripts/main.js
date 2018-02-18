@@ -41,11 +41,14 @@ require(['account'], function (Account) {
 
 require.config({
   paths: {
-    'StellarSdk': 'vendor/stellar-sdk.min'
+    'stellar-sdk': '../../bower_components/stellar-sdk/stellar-sdk.min'
   },
   shim: {
-    'StellarSdk': {
+    'stellar-sdk': {
       exports: 'StellarSdk'
     }
-  }
+  },
+  packages: [
+
+  ]
 });

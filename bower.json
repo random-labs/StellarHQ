@@ -1,0 +1,21 @@
+{
+  "name": "StellarHangar",
+  "homepage": "https://github.com/ZanderAdam/StellarHangar",
+  "authors": [
+    "Aleks <aadamovic@tehnik-design.com>"
+  ],
+  "description": "Stellar Account and Transaction Manager",
+  "main": "",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "requirejs": "^2.3.5",
+    "stellar-sdk": "^0.8.0"
+  }
+}

@@ -1,4 +1,4 @@
-define(['StellarSdk'], function (StellarSdk) {
+define(['stellar-sdk'], function (StellarSdk) {
 
   function connect(useLive) {
     var server = new StellarSdk.Server('https://horizon-testnet.stellar.org');

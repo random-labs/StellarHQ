@@ -1,4 +1,4 @@
-define(['StellarSdk', 'util'], function (StellarSdk, util) {
+define(['stellar-sdk', 'util'], function (StellarSdk, util) {
 
   function Transaction(account) {
     var transactionBuilder = new StellarSdk.TransactionBuilder(account);
