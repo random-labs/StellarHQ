@@ -4,11 +4,10 @@
 <head>
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>Page Title</title>
+  <title>Stellar Hangar - Stellar Account Manager</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="main.css" />
-  <script src="stellar-sdk.min.js"></script>
-  <script src="data.js"></script>
+  <script data-main="app/scripts/main" src="app/scripts/vendor/require.js"></script>
 </head>
 
 <body>
@@ -22,17 +21,17 @@
     <div>Enter key/value one per line</div>
     <textarea id="jsonPayload"></textarea>
   </div>
-  <input type="button" value="Create Transaction" onclick="buildTransaction()">
+  <input type="button" id="createTransaction" value="Create Transaction">
 
   <div>
     <div class="header">Secret Key</div>
     <input type="text" id="secretKey">
   </div>
-  <input type="button" value="Submit Transaction" onclick="sendTransaction()">
+  <input type="button" id="submitTransaction" value="Submit Transaction">
   <h2>Read Account Data</h2>
   <div class="header">Account Data</div>
   <textarea id="jsonResult"></textarea>
-  <input type="button" value="Get Data" onclick="getTransactionData()">
+  <input type="button" id="getAccountData" value="Get Data">
 </body>
 
 </html>
