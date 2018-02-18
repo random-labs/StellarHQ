@@ -12,7 +12,13 @@ define(['StellarSdk', 'util'], function (StellarSdk, util) {
         buildData(payload);
       }
 
-      return transactionBuilder.build();
+      var transaction = transactionBuilder.build();
+
+      console.log('Transaction XDR: ');
+      console.log(transaction.toEnvelope().toXDR('base64'));
+      console.log();
+
+      return transaction;
     }
 
     function buildData(payload) {

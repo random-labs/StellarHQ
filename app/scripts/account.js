@@ -10,36 +10,46 @@ define([
     util,
     Transaction) {
 
-    function Account() {
-
-      var server = stellar.connect();
+    function Account(publicKey) {
       var transaction;
 
-      this.buildTransaction = function () {
-        publicKey = document.getElementById('publicKey').value;
+      if (navigator.onLine) {
+        var server = stellar.connect();
 
         server.loadAccount(publicKey)
           .then(function (account) {
-
-            transaction = new Transaction(account)
-              .buildTransaction();
-
-            console.log('Transaction XDR: ');
-            console.log(transaction.toEnvelope().toXDR('base64'));
-            console.log();
+            document.getElementById('sequenceNumber')
+              .value = account.sequenceNumber();
           })
           .catch(function (e) {
             console.error(e);
           });
       }
 
-      this.sendTransaction = function () {
+      this.buildTransaction = function () {
+        var nextSequenceNumber = document.getElementById('sequenceNumber').value;
+
+        var account = new StellarSdk.Account(publicKey, nextSequenceNumber);
+
+        transaction = new Transaction(account)
+          .buildTransaction();
+      }
+
+      this.signTransaction = function () {
         console.log('Signing transaction using secret key...');
 
         var sourceSecretKey = document.getElementById('secretKey').value
         var sourceKeypair = StellarSdk.Keypair.fromSecret(sourceSecretKey);
 
         transaction.sign(sourceKeypair);
+
+        console.log('Signed Transaction XDR: ');
+        console.log(transaction.toEnvelope().toXDR('base64'));
+        console.log();
+
+      }
+
+      this.sendTransaction = function () {
 
         console.log('Sending transaction...')
         server.submitTransaction(transaction)
