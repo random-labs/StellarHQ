@@ -11,29 +11,29 @@
 </head>
 
 <body>
-  <div id="servertoggle">
-    Test Server
+  <div class="header">
+    <span class="logo">
+      <span>Stellar</span>
+    </span>
+    <div id="servertoggle">
+      Test Server
+    </div>
   </div>
-  <div data-bind="with: account">
-    <div class="header">Public Key</div>
-    <input type="text" data-bind="value: publicKey">
-    <input type="button" data-bind="click: connect, visible: $parent.isOnline, enable: publicKey" class="online" value="Connect">
-    <div class="header">Next Sequence Number</div>
-    <input type="text" data-bind="value: sequenceNumber, enable: publicKey">
-    <div class="header">Payload</div>
-    <div>Enter key/value one per line</div>
-    <div>Accepts Json Objects</div>
-    <textarea data-bind="value: payload, enable: sequenceNumber"></textarea>
-    <input type="button" data-bind="click: createTransaction, enable: sequenceNumber" value="Create Transaction">
-    <div class="header">Secret Key</div>
-    <input type="text" data-bind="value: secretKey, enable: transaction">
-    <input type="button" data-bind="click: signTransaction, enable: transaction && secretKey" value="Sign Transaction">
-    <input type="button" data-bind="click: sendTransaction, visible: $parent.isOnline, enable: transaction" value="Submit Transaction">
-    <div data-bind="visible: $parent.isOnline">
-      <h2>Read Account Data</h2>
-      <div class="header">Account Data</div>
-      <textarea data-bind="value: accountData, enable: publicKey"></textarea>
-      <input type="button" data-bind="click: getAccountData, enable: publicKey" value="Get Data">
+  <div class="content">
+    <div data-bind="with: account">
+      <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+      <input type="button" data-bind="click: connect, visible: $parent.isOnline, enable: publicKey" value="Connect">
+
+      <input type="text" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number ">
+      <textarea data-bind="value: payload, valueUpdate: 'afterkeydown', enable: sequenceNumber" placeholder="Data Value&#10;&#10;Enter key/value one per line&#10;Accepts Json Objects"></textarea>
+      <input type="button" data-bind="click: createTransaction, enable: payload" value="Create Transaction">
+      <input type="text" data-bind="value: secretKey, valueUpdate: 'afterkeydown', enable: transaction" placeholder="Secret Key">
+      <input type="button" data-bind="click: signTransaction, enable: transaction && secretKey" value="Sign Transaction">
+      <input type="button" data-bind="click: sendTransaction, visible: $parent.isOnline, enable: transaction" value="Submit Transaction">
+      <div data-bind="visible: $parent.isOnline">
+        <textarea data-bind="value: accountData, enable: publicKey" placeholder="Account Data" readonly></textarea>
+        <input type="button" data-bind="click: getAccountData, enable: publicKey" value="Get Data">
+      </div>
     </div>
   </div>
 </body>
