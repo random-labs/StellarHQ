@@ -20,11 +20,16 @@ define([
       this.accountData = ko.observable(null);
       this.transaction = ko.observable(null);
       this.payload = ko.observable("");
+      this.accountTab = ko.observable("details");
+
+      if (!util.isOnline)
+        this.accountTab = ko.observable("transactions");
 
       this.connect = function () {
         server.loadAccount(this.publicKey())
           .then(function (account) {
             self.sequenceNumber(account.sequenceNumber());
+            self.getAccountData();
           })
           .catch(function (e) {
             console.error(e);
