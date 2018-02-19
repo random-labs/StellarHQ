@@ -17,23 +17,23 @@
   <div data-bind="with: account">
     <div class="header">Public Key</div>
     <input type="text" data-bind="value: publicKey">
-    <input type="button" data-bind="click: connect, visible: $parent.isOnline" class="online" value="Connect">
+    <input type="button" data-bind="click: connect, visible: $parent.isOnline, enable: publicKey" class="online" value="Connect">
     <div class="header">Next Sequence Number</div>
-    <input type="text" data-bind="value: sequenceNumber">
+    <input type="text" data-bind="value: sequenceNumber, enable: publicKey">
     <div class="header">Payload</div>
     <div>Enter key/value one per line</div>
     <div>Accepts Json Objects</div>
-    <textarea data-bind="value: payload"></textarea>
-    <input type="button" data-bind="click: createTransaction" value="Create Transaction">
+    <textarea data-bind="value: payload, enable: sequenceNumber"></textarea>
+    <input type="button" data-bind="click: createTransaction, enable: sequenceNumber" value="Create Transaction">
     <div class="header">Secret Key</div>
-    <input type="text" data-bind="value: secretKey">
-    <input type="button" data-bind="click: signTransaction" value="Sign Transaction">
-    <input type="button" data-bind="click: sendTransaction, visible: $parent.isOnline" value="Submit Transaction">
+    <input type="text" data-bind="value: secretKey, enable: transaction">
+    <input type="button" data-bind="click: signTransaction, enable: transaction && secretKey" value="Sign Transaction">
+    <input type="button" data-bind="click: sendTransaction, visible: $parent.isOnline, enable: transaction" value="Submit Transaction">
     <div data-bind="visible: $parent.isOnline">
       <h2>Read Account Data</h2>
       <div class="header">Account Data</div>
-      <textarea data-bind="value: accountData"></textarea>
-      <input type="button" data-bind="click: getAccountData" value="Get Data">
+      <textarea data-bind="value: accountData, enable: publicKey"></textarea>
+      <input type="button" data-bind="click: getAccountData, enable: publicKey" value="Get Data">
     </div>
   </div>
 </body>
