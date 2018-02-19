@@ -1,13 +1,13 @@
-# StellarHangar
+# StellarHQ
 
 Stellar Account Management
 
-Visit: https://zanderadam.github.io/StellarHangar/  
+Visit: https://zanderadam.github.io/StellarHQ/  
 Check browser console output for XDR when transaction is created
 
 ## How to use offline ##
 
-* Clone the repo locally or download [repo zip](https://github.com/ZanderAdam/StellarHangar/archive/master.zip)
+* Clone the repo locally or download [repo zip](https://github.com/ZanderAdam/StellarHQ/archive/master.zip)
 * Extract the zip
 * Double click on index.html
 * Sequence number is required before a transaction can be build in offline mode
