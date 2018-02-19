@@ -56,10 +56,15 @@ define(function () {
     return true;
   }
 
+  function isOnline() {
+    return navigator.onLine;
+  }
+
   return {
     b64DecodeUnicode: b64DecodeUnicode,
     flatten: flatten,
     unflatten: unflatten,
-    isJson: isJson
+    isJson: isJson,
+    isOnline: isOnline
   };
 });

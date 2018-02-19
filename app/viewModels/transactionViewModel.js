@@ -1,11 +1,9 @@
 define(['stellar-sdk', 'util'], function (StellarSdk, util) {
 
-  function Transaction(account) {
+  function TransactionViewModel(account) {
     var transactionBuilder = new StellarSdk.TransactionBuilder(account);
 
-    this.buildTransaction = function () {
-      var payload = document.getElementById('payload').value;
-
+    this.buildTransaction = function (payload) {
       if (util.isJson(payload)) {
         buildDataFromJson(payload);
       } else {
@@ -47,5 +45,5 @@ define(['stellar-sdk', 'util'], function (StellarSdk, util) {
     }
   }
 
-  return Transaction;
+  return TransactionViewModel;
 });

@@ -1,0 +1,30 @@
+.header {
+  padding: 10px 0;
+}
+
+input[type=text],
+textarea {
+  width: 100%;
+}
+
+textarea {
+  min-height: 250px;
+}
+
+input[type=button] {
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 15px;
+}
+
+body a {
+  display: block;
+}
+
+#servertoggle {
+  float: right;
+  background: green;
+  padding: 5px;
+  color: white;
+  text-transform: uppercase;
+}

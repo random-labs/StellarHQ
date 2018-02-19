@@ -16,6 +16,8 @@
   ],
   "dependencies": {
     "requirejs": "^2.3.5",
-    "stellar-sdk": "^0.8.0"
+    "stellar-sdk": "^0.8.0",
+    "knockout": "^3.4.2",
+    "domReady": "requirejs-domready#^2.0.1"
   }
 }
