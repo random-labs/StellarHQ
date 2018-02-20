@@ -61,7 +61,8 @@ textarea {
   min-height: 250px;
 }
 
-input[type=button] {
+input[type=button],
+.importFile {
   color: white;
   padding: 10px;
   margin: 10px 0;
@@ -72,7 +73,12 @@ input[type=button] {
   cursor: pointer;
 }
 
-input[type=button]:hover {
+input[type=file] {
+  display: none;
+}
+
+input[type=button]:hover,
+.importFile:hover {
   background: #077492;
 }
 
@@ -149,7 +155,7 @@ body a {
   float: left;
 }
 
-.tab label {
+.tab .tab-label {
   background: #eee;
   padding: 10px;
   border: 1px solid rgb(199, 199, 199);
@@ -175,12 +181,12 @@ body a {
   opacity: 0;
 }
 
-[type=radio]:checked~label {
+[type=radio]:checked~.tab-label {
   background: white;
   border-bottom: 1px solid white;
 }
 
-[type=radio]:checked~label~.tabcontent {
+[type=radio]:checked~.tab-label~.tabcontent {
   opacity: 1;
 }
 

@@ -60,11 +60,34 @@ define(function () {
     return navigator.onLine;
   }
 
+  function downloadFile(text, name, type) {
+    var a = document.createElement("a");
+    var file = new Blob([text], {
+      type: type
+    });
+    a.href = URL.createObjectURL(file);
+    a.download = name;
+    a.click();
+  }
+
+  function uploadFile(file) {
+    return new Promise(function (resolve, reject) {
+      var reader = new FileReader();
+      reader.onloadend = function (onloadend_e) {
+        resolve(reader.result);
+      }
+
+      reader.readAsText(file);
+    });
+  }
+
   return {
     b64DecodeUnicode: b64DecodeUnicode,
     flatten: flatten,
     unflatten: unflatten,
     isJson: isJson,
-    isOnline: isOnline
+    isOnline: isOnline,
+    downloadFile: downloadFile,
+    uploadFile: uploadFile
   };
 });

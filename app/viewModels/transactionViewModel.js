@@ -15,7 +15,7 @@ define([
     var transactionBuilder;
     var server = server;
 
-    this.isOnline = util.isOnline;
+    this.isOnline = util.isOnline();
     this.publicKey = publicKey;
     this.secretKey = ko.observable();
     this.sequenceNumber = ko.observable(sequenceNumber);
@@ -26,6 +26,7 @@ define([
     this.isSigned = ko.observable(false);
     this.status = ko.observable();
     this.xdr = ko.observable();
+    this.isImported = ko.observable(false);
 
     this.numStellarOps = ko.pureComputed(function () {
       var count = 0;
@@ -78,6 +79,13 @@ define([
       console.log();
     }
 
+    this.loadTransaction = function (existingTransaction) {
+      this.isSigned(existingTransaction.iS);
+      this.xdr(existingTransaction.xdr);
+      this.transaction(new StellarSdk.Transaction(existingTransaction.xdr));
+      this.isImported(true);
+    }
+
     this.signTransaction = function () {
       console.log('Signing Transaction...');
       var sourceKeypair = StellarSdk.Keypair.fromSecret(this.secretKey());
@@ -106,6 +114,25 @@ define([
           console.log('An error has occured:');
           console.log(err);
         });
+    }
+
+    this.exportTransaction = function () {
+      var publicKeyShort = this.publicKey.substring(0, 5) + '-' + this.publicKey.slice(-5);
+      var date = new Date();
+      var dateTag = date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) +
+        ("0" + date.getDate()).slice(-2) + ("0" + date.getHours() + 1).slice(-2) +
+        ("0" + date.getMinutes()).slice(-2) + ("0" + date.getSeconds()).slice(-2);
+
+      var transaction = {
+        pK: this.publicKey,
+        iS: this.isSigned(),
+        xdr: this.xdr()
+      };
+
+      var signedSuffix = this.isSigned() ? '_SIGNED' : '_UNSIGNED';
+
+      util.downloadFile(JSON.stringify(transaction), publicKeyShort +
+        '_' + dateTag + signedSuffix + '.stellarhq', 'text/plain');
     }
   }
 

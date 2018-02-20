@@ -26,6 +26,9 @@ define([
         this.accountTab = ko.observable("transactions");
 
       this.connect = function () {
+        if (!util.isOnline())
+          return Promise.resolve();
+
         return server.loadAccount(this.publicKey())
           .then(function (account) {
             console.log('Account Loaded');
@@ -42,13 +45,30 @@ define([
       }
 
       this.newTransaction = function () {
-        var promise = util.isOnline() ? this.connect() : Promise.resolve();
-
-        promise.then(function (account) {
-          self.transaction(new TransactionViewModel(self.publicKey(),
-            account ? account.sequenceNumber() : null, server))
-        });
+        this.connect()
+          .then(function (account) {
+            self.transaction(new TransactionViewModel(self.publicKey(),
+              account ? account.sequenceNumber() : null, server));
+          });
       }
+
+      this.importTransaction = function (data, e) {
+        var file = e.target.files[0];
+
+        if (!file)
+          return;
+
+        util.uploadFile(file)
+          .then(function (result) {
+            var parsedTran = JSON.parse(result);
+            self.publicKey(parsedTran.pK);
+
+            var newTransaction = new TransactionViewModel(self.publicKey(), null, server);
+            newTransaction.loadTransaction(parsedTran);
+
+            self.transaction(newTransaction);
+          });
+      };
 
       this.getAccountData = function (account) {
         var data = account.data_attr;

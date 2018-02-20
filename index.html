@@ -28,7 +28,7 @@
       <div class="tabs">
         <div class="tab" data-bind="visible: account && $parent.isOnline">
           <input type="radio" id="tab-1" name="tab-group-1" value="details" data-bind="checked: accountTab">
-          <label for="tab-1">View Account</label>
+          <label class="tab-label" for="tab-1">View Account</label>
           <div class="tabcontent">
             <textarea data-bind="value: accountData, enable: publicKey" placeholder="Account Data" readonly></textarea>
             <input type="button" data-bind="click: connect, enable: publicKey" value="Refresh">
@@ -37,13 +37,17 @@
 
         <div class="tab">
           <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
-          <label for="tab-2">Create Transaction</label>
+          <label class="tab-label" for="tab-2">Create Transaction</label>
           <div class="tabcontent">
             <input type="button" data-bind="click: newTransaction" value="New Transaction">
+            <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
+            <label for="transactionImport" class="importFile">Import Transaction</label>
             <div data-bind="with: transaction">
-              <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
-              <input type="button" data-bind="click: newOperation, enable: sequenceNumber" value="New Operation">
-              <input type="button" data-bind="click: buildTransaction, enable: currentOperations().length > 0" value="Build Transaction">
+              <div class="newTransaction" data-bind="if: !isImported()">
+                <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
+                <input type="button" data-bind="click: newOperation, enable: sequenceNumber" value="New Operation">
+                <input type="button" data-bind="click: buildTransaction, enable: currentOperations().length > 0 || isImported" value="Build Transaction">
+              </div>
               <div class="operations clearfix" data-bind="visible: currentOperations().length > 0">
                 <span data-bind="text: numStellarOps" id="numStellarOps"></span>
               </div>
@@ -53,6 +57,7 @@
                 <input type="password" data-bind="value: secretKey, valueUpdate: 'afterkeydown'" placeholder="Secret Key: Example: SBMA2Y2WUSFH3HFH7C3BFHJIZZGNOKU3THPCLYS3V6IB2LWV5HQFH56M">
                 <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
                 <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
+                <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
                 <div class="status" data-bind="text: status"></div>
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
                   css: { signed: isSigned() }"></div>
