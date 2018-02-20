@@ -1,47 +1,111 @@
-define(['stellar-sdk', 'util'], function (StellarSdk, util) {
+define([
+  'stellar-sdk',
+  'util',
+  'knockout',
+  'viewModels/operationViewModel'
+], function (
+  StellarSdk,
+  util,
+  ko,
+  OperationViewModel) {
 
-  function TransactionViewModel(account) {
-    var transactionBuilder = new StellarSdk.TransactionBuilder(account);
+  function TransactionViewModel(publicKey, sequenceNumber, server) {
+    var self = this;
 
-    this.buildTransaction = function (payload) {
-      if (util.isJson(payload)) {
-        buildDataFromJson(payload);
-      } else {
-        buildData(payload);
-      }
+    var transactionBuilder;
+    var server = server;
 
-      var transaction = transactionBuilder.build();
+    this.isOnline = util.isOnline;
+    this.publicKey = publicKey;
+    this.secretKey = ko.observable();
+    this.sequenceNumber = ko.observable(sequenceNumber);
+    this.currentOperation = ko.observable();
+    this.currentOperations = ko.observableArray([]);
+    this.numStellarOps = ko.observable(0);
+    this.transaction = ko.observable();
+    this.isSigned = ko.observable(false);
+    this.status = ko.observable();
+    this.xdr = ko.observable();
 
+    this.numStellarOps = ko.pureComputed(function () {
+      var count = 0;
+      this.currentOperations().forEach(e => {
+        count += e.stellarOps.length;
+      });
+      return count;
+    }, this);
+
+    this.newOperation = function () {
+      this.currentOperation(new OperationViewModel());
+    }
+
+    this.saveOperation = function () {
+      var newOperation = this.currentOperation().getOp();
+      newOperation.build();
+
+      this.currentOperations.push(newOperation);
+      this.currentOperation(null);
+    }
+
+    this.cancelOperation = function () {
+      this.currentOperation(null);
+    }
+
+    this.buildTransaction = function () {
+      //stellar lab shows incremented sequence number
+      //subtract 1 to make it valid when building the transaction
+
+      var seqNumber = parseInt(this.sequenceNumber()) - 1;
+
+      var account = new StellarSdk.Account(this.publicKey, seqNumber.toString());
+      transactionBuilder = new StellarSdk.TransactionBuilder(account);
+
+      console.log('Building Transaction...');
+      this.currentOperations().forEach(op => {
+        op.stellarOps.forEach(sop => {
+          transactionBuilder.addOperation(sop);
+        });
+      });
+
+      this.transaction(transactionBuilder.build());
+
+      this.xdr(this.transaction().toEnvelope().toXDR('base64'));
+      this.isSigned(false);
+
+      console.log('Done!');
       console.log('Transaction XDR: ');
-      console.log(transaction.toEnvelope().toXDR('base64'));
+      console.log(this.xdr());
       console.log();
-
-      return transaction;
     }
 
-    function buildData(payload) {
-      var splitPayload = payload.split('\n');
+    this.signTransaction = function () {
+      console.log('Signing Transaction...');
+      var sourceKeypair = StellarSdk.Keypair.fromSecret(this.secretKey());
 
-      for (let i = 0; i < splitPayload.length; i += 2) {
-        var key = splitPayload[i];
-        var value = splitPayload[i + 1];
+      this.transaction().sign(sourceKeypair);
 
-        transactionBuilder.addOperation(StellarSdk.Operation.manageData({
-          name: key,
-          value: value
-        }));
-      }
+      this.isSigned(true);
+      this.xdr(this.transaction().toEnvelope().toXDR('base64'));
+
+      console.log('Done!');
+      console.log('Signed Transaction XDR: ');
+      console.log(this.xdr());
+      console.log();
     }
 
-    function buildDataFromJson(payload) {
-      var flatJson = util.flatten(JSON.parse(payload));
+    this.sendTransaction = function () {
 
-      Object.keys(flatJson).forEach(function (key) {
-        transactionBuilder.addOperation(StellarSdk.Operation.manageData({
-          name: key,
-          value: flatJson[key]
-        }));
-      })
+      console.log('Sending transaction...')
+      server.submitTransaction(this.transaction())
+        .then(function (transactionResult) {
+          console.log('\nSuccess! View the transaction at: ');
+          console.log(transactionResult._links.transaction.href);
+          self.status("Transaction Submitted: " + transactionResult._links.transaction.href);
+        })
+        .catch(function (err) {
+          console.log('An error has occured:');
+          console.log(err);
+        });
     }
   }
 

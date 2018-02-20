@@ -26,12 +26,12 @@
         <input type="button" data-bind="click: connect, visible: $parent.isOnline, enable: publicKey" value="Connect">
       </div>
       <div class="tabs">
-        <div class="tab" data-bind="visible: $parent.isOnline">
+        <div class="tab" data-bind="visible: account && $parent.isOnline">
           <input type="radio" id="tab-1" name="tab-group-1" value="details" data-bind="checked: accountTab">
           <label for="tab-1">View Account</label>
           <div class="tabcontent">
             <textarea data-bind="value: accountData, enable: publicKey" placeholder="Account Data" readonly></textarea>
-            <input type="button" data-bind="click: getAccountData, enable: publicKey" value="Refresh">
+            <input type="button" data-bind="click: connect, enable: publicKey" value="Refresh">
           </div>
         </div>
 
@@ -39,17 +39,52 @@
           <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
           <label for="tab-2">Create Transaction</label>
           <div class="tabcontent">
-            <input type="text" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number ">
-            <textarea data-bind="value: payload, valueUpdate: 'afterkeydown', enable: sequenceNumber" placeholder="Data Value&#10;&#10;Enter key/value one per line&#10;Accepts Json Objects"></textarea>
-            <input type="button" data-bind="click: createTransaction, enable: payload" value="Create Transaction">
-            <input type="text" data-bind="value: secretKey, valueUpdate: 'afterkeydown', enable: transaction" placeholder="Secret Key">
-            <input type="button" data-bind="click: signTransaction, enable: transaction && secretKey" value="Sign Transaction">
-            <input type="button" data-bind="click: sendTransaction, visible: $parent.isOnline, enable: transaction" value="Submit Transaction">
+            <input type="button" data-bind="click: newTransaction" value="New Transaction">
+            <div data-bind="with: transaction">
+              <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
+              <input type="button" data-bind="click: newOperation, enable: sequenceNumber" value="New Operation">
+              <input type="button" data-bind="click: buildTransaction, enable: currentOperations().length > 0" value="Build Transaction">
+              <div class="operations clearfix" data-bind="visible: currentOperations().length > 0">
+                <span data-bind="text: numStellarOps" id="numStellarOps"></span>
+              </div>
+              <div data-bind="template: { name: 'add-operation-template', if: currentOperation}"></div>
+
+              <div data-bind="if: xdr">
+                <input type="password" data-bind="value: secretKey, valueUpdate: 'afterkeydown'" placeholder="Secret Key: Example: SBMA2Y2WUSFH3HFH7C3BFHJIZZGNOKU3THPCLYS3V6IB2LWV5HQFH56M">
+                <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
+                <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
+                <div class="status" data-bind="text: status"></div>
+                <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
+                  css: { signed: isSigned() }"></div>
+                <textarea data-bind=" value: xdr" placeholder="Transaction XDR" readonly></textarea>
+              </div>
+            </div>
           </div>
         </div>
+        <div id="clear" style="clear:both;"></div>
       </div>
     </div>
   </div>
+
+  <!-- ADD OPERATION TEMPLATE -->
+  <script type="text/html" id="add-operation-template">
+    <div class="overlay">
+      <div class="content">
+        <div>Add New Operation</div>
+        <div data-bind="with: currentOperation">
+          <select data-bind="options: operationTypes, value: selectedOperation, optionsText: 'description'"></select>
+          <div data-bind="template: { name: selectedOperation().type, data:selectedOperation}"></div>
+        </div>
+        <input type="button" data-bind="click: saveOperation" value="Save Operation">
+        <input type="button" data-bind="click: cancelOperation" value="Cancel">
+      </div>
+    </div>
+  </script>
+
+  <!-- OPERATION TEMPLATES -->
+  <script type="text/html" id="manageData">
+    <textarea data-bind="value: payload, valueUpdate: 'afterkeydown'" placeholder="Data Value&#10;&#10;Enter key/value one per line&#10;Accepts Json Objects"></textarea>
+  </script>
 </body>
 
 </html>

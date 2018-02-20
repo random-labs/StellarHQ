@@ -29,7 +29,10 @@ body {
 }
 
 input[type=text],
-textarea {
+input[type=number],
+input[type=password],
+textarea,
+select {
   width: 100%;
   padding: 5px;
   border: 1px solid rgb(199, 199, 199);
@@ -40,9 +43,12 @@ textarea {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  background: white;
 }
 
-input[type=text] {
+input[type=text],
+input[type=number],
+input[type=password] {
   font-size: 20px;
 }
 
@@ -85,6 +91,47 @@ body a {
   padding: 5px;
   color: white;
   text-transform: uppercase;
+}
+
+#numStellarOps {
+  float: right;
+}
+
+#numStellarOps::before {
+  content: "Current Operations: ";
+}
+
+#numStellarOps::after {
+  content: "/100";
+  clear: both;
+}
+
+.operations {}
+
+.status {
+  border: 1px solid rgb(199, 199, 199);
+  padding: 5px;
+  margin: 10px 0;
+}
+
+.signature {
+  background: #ff8686;
+  padding: 5px;
+  color: white;
+  text-align: center;
+}
+
+.signature.signed {
+  background: #10a70b;
+}
+
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
 }
 
 /* tabs */
@@ -135,4 +182,27 @@ body a {
 
 [type=radio]:checked~label~.tabcontent {
   opacity: 1;
+}
+
+/* overlay */
+
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(199, 199, 199, 0.685);
+  z-index: 3;
+}
+
+.overlay .content {
+  background: white;
+  width: 80vh;
+  border: 1px solid rgb(199, 199, 199);
+  border-radius: 5px;
+  padding: 10px;
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
