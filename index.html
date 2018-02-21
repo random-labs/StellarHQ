@@ -59,6 +59,8 @@
                 <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
                 <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
                 <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
+                <input type="button" data-bind="click: createQr, enable: xdr" value="QR">
+                <div id="qrcode"></div>
                 <div class="status" data-bind="text: status"></div>
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
                   css: { signed: isSigned() }"></div>

@@ -134,6 +134,16 @@ define([
       util.downloadFile(JSON.stringify(transaction), publicKeyShort +
         '_' + dateTag + signedSuffix + '.stellarhq', 'text/plain');
     }
+
+    this.createQr = function () {
+      var transaction = {
+        pK: this.publicKey,
+        iS: this.isSigned(),
+        xdr: this.xdr()
+      };
+
+      util.generateQRCode(JSON.stringify(transaction));
+    }
   }
 
   return TransactionViewModel;

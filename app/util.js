@@ -1,4 +1,9 @@
-define(function () {
+define([
+  'qrcode'
+], function (
+  qrcode
+) {
+
   function b64DecodeUnicode(str) {
     // Going backwards: from bytestream, to percent-encoding, to original string.
     return decodeURIComponent(atob(str).split('').map(function (c) {
@@ -81,6 +86,12 @@ define(function () {
     });
   }
 
+  function generateQRCode(data) {
+    var qr = qrcode(0, 'L');
+    qr.addData(data);
+    qr.make();
+    document.getElementById('qrcode').innerHTML = qr.createImgTag();
+  }
   return {
     b64DecodeUnicode: b64DecodeUnicode,
     flatten: flatten,
@@ -88,6 +99,7 @@ define(function () {
     isJson: isJson,
     isOnline: isOnline,
     downloadFile: downloadFile,
-    uploadFile: uploadFile
+    uploadFile: uploadFile,
+    generateQRCode: generateQRCode,
   };
 });
