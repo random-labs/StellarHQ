@@ -7,6 +7,7 @@
   <title>StellarHQ - Stellar Account Manager</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="app/assets/main.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="app/assets/mobile.css" />
   <script data-main="app/app" src="bower_components/requirejs/require.js"></script>
 </head>
 
@@ -39,7 +40,7 @@
           <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
           <label class="tab-label" for="tab-2">Create Transaction</label>
           <div class="tabcontent">
-            <input type="button" data-bind="click: newTransaction" value="New Transaction">
+            <input type="button" data-bind="click: newTransaction, enable: publicKey" value="New Transaction">
             <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
             <label for="transactionImport" class="importFile">Import Transaction</label>
             <div data-bind="with: transaction">

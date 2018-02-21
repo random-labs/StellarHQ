@@ -1,0 +1,26 @@
+@media only screen and (max-width: 720px),
+only screen and (max-device-width: 720px) {
+  #servertoggle {
+    font-size: .8em;
+  }
+  input[type=button],
+  .importFile {
+    width: 100%;
+    box-sizing: border-box;
+    display: inline-block;
+    text-align: center;
+  }
+  .tab {
+    width: 50%;
+  }
+  .tab .tab-label {
+    width: 100%;
+    font-size: .8em;
+    display: inline-block;
+    text-align: center;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    word-spacing: 100vw;
+  }
+}
