@@ -2,13 +2,15 @@ define([
     'stellar-sdk',
     'util',
     'knockout',
-    'viewModels/transactionViewModel'
+    'viewModels/transactionViewModel',
+    'viewModels/qrScanViewModel'
   ],
   function (
     StellarSdk,
     util,
     ko,
-    TransactionViewModel) {
+    TransactionViewModel,
+    QrScanViewModel) {
 
     function AccountViewModel(server) {
       var self = this;
@@ -21,6 +23,8 @@ define([
       this.accountData = ko.observable(null);
       this.transaction = ko.observable(null);
       this.accountTab = ko.observable("details");
+      this.showScanQr = ko.observable(false);
+      this.qrScanner = ko.observable();
 
       if (!util.isOnline())
         this.accountTab = ko.observable("transactions");
@@ -60,15 +64,29 @@ define([
 
         util.uploadFile(file)
           .then(function (result) {
-            var parsedTran = JSON.parse(result);
-            self.publicKey(parsedTran.pK);
-
-            var newTransaction = new TransactionViewModel(self.publicKey(), null, server);
-            newTransaction.loadTransaction(parsedTran);
-
-            self.transaction(newTransaction);
+            self.loadFromJson(result);
           });
       };
+
+      this.scanQr = function () {
+        if (!this.qrScanner())
+          this.qrScanner(new QrScanViewModel());
+
+        self.showScanQr(true);
+
+        this.qrPromise = this.qrScanner().scan();
+
+        this.qrPromise.promise
+          .then(function (result) {
+            self.showScanQr(false);
+            self.loadFromJson(result);
+          })
+      }
+
+      this.cancelQrScan = function () {
+        this.qrPromise.cancel();
+        self.showScanQr(false);
+      }
 
       this.getAccountData = function (account) {
         var data = account.data_attr;
@@ -83,6 +101,16 @@ define([
         var data = util.unflatten(data);
 
         self.accountData(JSON.stringify(data, null, '  '));
+      }
+
+      this.loadFromJson = function (data) {
+        var parsedTran = JSON.parse(data);
+        self.publicKey(parsedTran.pK);
+
+        var newTransaction = new TransactionViewModel(self.publicKey(), null, server);
+        newTransaction.loadTransaction(parsedTran);
+
+        self.transaction(newTransaction);
       }
     }
 

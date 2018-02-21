@@ -5,3 +5,4 @@ bower_components/
 !bower_components/**/knockout.js
 !bower_components/**/domReady.js
 !bower_components/**/js/qrcode.js
+!bower_components/**/dist/jsQR.js

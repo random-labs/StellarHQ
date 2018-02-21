@@ -43,11 +43,13 @@
             <input type="button" data-bind="click: newTransaction, enable: publicKey" value="New Transaction">
             <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
             <label for="transactionImport" class="importFile">Import Transaction</label>
-            <div data-bind="with: transaction">
+            <input type="button" data-bind="click: scanQr" value="Scan QR">
+            <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
+            <div data-bind=" with: transaction">
               <div class="newTransaction" data-bind="if: !isImported()">
                 <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
                 <input type="button" data-bind="click: newOperation, enable: sequenceNumber" value="New Operation">
-                <input type="button" data-bind="click: buildTransaction, enable: currentOperations().length > 0 || isImported" value="Build Transaction">
+                <input type="button" data-bind="click: buildTransaction, enable: currentOperations().length> 0 || isImported" value="Build Transaction">
               </div>
               <div class="operations clearfix" data-bind="visible: currentOperations().length > 0">
                 <span data-bind="text: numStellarOps" id="numStellarOps"></span>
@@ -59,7 +61,7 @@
                 <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
                 <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
                 <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
-                <input type="button" data-bind="click: createQr, enable: xdr" value="QR">
+                <input type="button" data-bind="click: createQr, enable: xdr" value="Show QR">
                 <div id="qrcode"></div>
                 <div class="status" data-bind="text: status"></div>
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
@@ -92,6 +94,21 @@
   <!-- OPERATION TEMPLATES -->
   <script type="text/html" id="manageData">
     <textarea data-bind="value: payload, valueUpdate: 'afterkeydown'" placeholder="Data Value&#10;&#10;Enter key/value one per line&#10;Accepts Json Objects"></textarea>
+  </script>
+
+  <!-- SCAN QR TEMPLATE -->
+  <script type="text/html" id="qr-scan-template">
+    <div class="overlay qr">
+      <div class="content">
+        <div>Scan Transaction QR</div>
+        <div class="qrScan" data-bind="with: qrScanner">
+          <canvas id="videoCanvas"></canvas>
+          <video id="qrPreview" hidden></video>
+          <select data-bind="options: devices, value: selectedDevice, optionsText: 'description', visible: devices.length > 1"></select>
+        </div>
+        <input type="button" data-bind="click: cancelQrScan" value="Cancel">
+      </div>
+    </div>
   </script>
 </body>
 

@@ -92,6 +92,7 @@ define([
     qr.make();
     document.getElementById('qrcode').innerHTML = qr.createImgTag();
   }
+
   return {
     b64DecodeUnicode: b64DecodeUnicode,
     flatten: flatten,
@@ -100,6 +101,6 @@ define([
     isOnline: isOnline,
     downloadFile: downloadFile,
     uploadFile: uploadFile,
-    generateQRCode: generateQRCode,
+    generateQRCode: generateQRCode
   };
 });

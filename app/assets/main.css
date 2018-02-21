@@ -140,6 +140,11 @@ body a {
   height: 0;
 }
 
+.qrScan {
+  text-align: center;
+  margin-top: 25px;
+}
+
 /* tabs */
 
 .tabs {
@@ -203,11 +208,15 @@ body a {
 
 .overlay .content {
   background: white;
-  width: 80vh;
+  width: 80vw;
   border: 1px solid rgb(199, 199, 199);
   border-radius: 5px;
   padding: 10px;
   position: relative;
   top: 50%;
   transform: translateY(-50%);
+}
+
+.overlay.qr .content {
+  width: 300px;
 }
