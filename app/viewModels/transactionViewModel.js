@@ -37,19 +37,24 @@ define([
     }, this);
 
     this.newOperation = function () {
-      this.currentOperation(new OperationViewModel());
-    }
+      var newOp = new OperationViewModel();
+      this.currentOperation(newOp);
 
-    this.saveOperation = function () {
-      var newOperation = this.currentOperation().getOp();
-      newOperation.build();
+      newOp.promise
+        .then(function () {
+          var newOperation = self.currentOperation().build();
 
-      this.currentOperations.push(newOperation);
-      this.currentOperation(null);
-    }
+          self.currentOperations.push(newOperation);
+          self.currentOperation(null);
+        })
+        .catch(function (error) {
+          if (error) {
+            console.error(error);
+            self.status("Error creating Operation: " + error.message)
+          }
 
-    this.cancelOperation = function () {
-      this.currentOperation(null);
+          self.currentOperation(null);
+        });
     }
 
     this.buildTransaction = function () {

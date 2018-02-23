@@ -82,11 +82,11 @@
       <div class="content">
         <div>Add New Operation</div>
         <div data-bind="with: currentOperation">
-          <select data-bind="options: operationTypes, value: selectedOperation, optionsText: 'description'"></select>
+          <select id="opSelect" data-bind="options: operationTypes, value: selectedOperation, optionsText: 'description'"></select>
           <div data-bind="template: { name: selectedOperation().type, data:selectedOperation}"></div>
+          <input type="button" data-bind="click: saveOperation" value="Save Operation">
+          <input type="button" data-bind="click: cancelOperation" value="Cancel">
         </div>
-        <input type="button" data-bind="click: saveOperation" value="Save Operation">
-        <input type="button" data-bind="click: cancelOperation" value="Cancel">
       </div>
     </div>
   </script>
