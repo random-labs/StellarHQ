@@ -28,6 +28,7 @@ define([
     this.xdr = ko.observable();
     this.qrCode = ko.observable();
     this.isImported = ko.observable(false);
+    this.tranUrl = ko.observable();
 
     this.numStellarOps = ko.pureComputed(function () {
       var count = 0;
@@ -108,12 +109,15 @@ define([
 
     this.sendTransaction = function () {
 
-      console.log('Sending transaction...')
+      console.log('Submitting transaction...');
+      self.status('Submitting transaction...');
+
       server.submitTransaction(this.transaction())
         .then(function (transactionResult) {
           console.log('\nSuccess! View the transaction at: ');
           console.log(transactionResult._links.transaction.href);
-          self.status("Transaction Submitted: " + transactionResult._links.transaction.href);
+          self.status("Transaction Submitted!");
+          self.tranUrl(transactionResult._links.transaction.href);
         })
         .catch(function (err) {
           console.log('An error has occured:');

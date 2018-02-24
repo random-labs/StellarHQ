@@ -125,6 +125,7 @@ body a {
 }
 
 .signature {
+  margin-top: 15px;
   background: #ff8686;
   padding: 5px;
   color: white;
