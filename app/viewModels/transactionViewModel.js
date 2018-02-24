@@ -26,6 +26,7 @@ define([
     this.isSigned = ko.observable(false);
     this.status = ko.observable();
     this.xdr = ko.observable();
+    this.qrCode = ko.observable();
     this.isImported = ko.observable(false);
 
     this.numStellarOps = ko.pureComputed(function () {
@@ -100,6 +101,10 @@ define([
       this.isSigned(true);
       this.xdr(this.transaction().toEnvelope().toXDR('base64'));
 
+      if (self.qrCode()) {
+        self.createQr();
+      }
+
       console.log('Done!');
       console.log('Signed Transaction XDR: ');
       console.log(this.xdr());
@@ -147,7 +152,7 @@ define([
         xdr: this.xdr()
       };
 
-      util.generateQRCode(JSON.stringify(transaction));
+      self.qrCode(util.generateQRCode(JSON.stringify(transaction)));
     }
   }
 

@@ -144,6 +144,10 @@ body a {
   height: 0;
 }
 
+#qrcode {
+  text-align: center;
+}
+
 .qrScan {
   text-align: center;
   margin-top: 25px;

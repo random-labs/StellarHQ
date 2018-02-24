@@ -90,7 +90,7 @@ define([
     var qr = qrcode(0, 'L');
     qr.addData(data);
     qr.make();
-    document.getElementById('qrcode').innerHTML = qr.createImgTag();
+    return qr.createImgTag();
   }
 
   return {
