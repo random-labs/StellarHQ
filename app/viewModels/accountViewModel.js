@@ -37,7 +37,6 @@ define([
           .then(function (account) {
             console.log('Account Loaded');
 
-            account.incrementSequenceNumber();
             self.account(account);
             self.getAccountData(account);
 

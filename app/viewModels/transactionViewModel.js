@@ -59,12 +59,7 @@ define([
     }
 
     this.buildTransaction = function () {
-      //stellar lab shows incremented sequence number
-      //subtract 1 to make it valid when building the transaction
-
-      var seqNumber = parseInt(this.sequenceNumber()) - 1;
-
-      var account = new StellarSdk.Account(this.publicKey, seqNumber.toString());
+      var account = new StellarSdk.Account(this.publicKey, this.sequenceNumber());
       transactionBuilder = new StellarSdk.TransactionBuilder(account);
 
       console.log('Building Transaction...');
