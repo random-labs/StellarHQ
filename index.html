@@ -22,10 +22,14 @@
   </div>
   <div class="content">
     <div data-bind="with: account">
+      <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
       <div class="input-group">
         <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
         <input type="button" data-bind="click: connect, visible: $parent.isOnline, enable: publicKey" value="Connect">
+        <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
+        <input type="button" data-bind="click: createQr, enable: publicKey" value="Create QR">
       </div>
+      <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
       <div class="tabs">
         <div class="tab" data-bind="visible: account && $parent.isOnline">
           <input type="radio" id="tab-1" name="tab-group-1" value="details" data-bind="checked: accountTab">
@@ -43,8 +47,7 @@
             <input type="button" data-bind="click: newTransaction, enable: publicKey" value="New Transaction">
             <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
             <label for="transactionImport" class="importFile">Import Transaction</label>
-            <input type="button" data-bind="click: scanQr" value="Scan QR">
-            <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
+            <input type="button" data-bind="click: scanTransactionQr" value="Scan QR">
             <div data-bind=" with: transaction">
               <div class="newTransaction" data-bind="if: !isImported()">
                 <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
@@ -61,8 +64,8 @@
                 <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
                 <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
                 <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
-                <input type="button" data-bind="click: createQr, enable: xdr" value="Show QR">
-                <div id="qrcode" data-bind="qrCode, html: qrCode"></div>
+                <input type="button" data-bind="click: createQr, enable: xdr" value="Create QR">
+                <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
                 <div class="status" data-bind="if: status">
                   <div data-bind="text: status"></div>
                   <a data-bind="if: tranUrl, attr: { href: tranUrl }">View Transaction on Stellar.org</a>

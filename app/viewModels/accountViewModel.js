@@ -19,12 +19,13 @@ define([
       this.publicKey = ko.observable("");
       this.secretKey = ko.observable("")
 
-      this.account = ko.observable(null);
-      this.accountData = ko.observable(null);
-      this.transaction = ko.observable(null);
+      this.account = ko.observable();
+      this.accountData = ko.observable();
+      this.transaction = ko.observable();
       this.accountTab = ko.observable("details");
       this.showScanQr = ko.observable(false);
       this.qrScanner = ko.observable();
+      this.qrCode = ko.observable();
 
       if (!util.isOnline())
         this.accountTab = ko.observable("transactions");
@@ -67,6 +68,24 @@ define([
           });
       };
 
+      this.createQr = function () {
+        self.qrCode(util.generateQRCode(self.publicKey()));
+      }
+
+      this.scanTransactionQr = function () {
+        self.scanQr().then(function (result) {
+          self.showScanQr(false);
+          self.loadFromJson(result);
+        })
+      }
+
+      this.scanPublicKeyQr = function () {
+        self.scanQr().then(function (result) {
+          self.showScanQr(false);
+          self.publicKey(result);
+        })
+      }
+
       this.scanQr = function () {
         if (!this.qrScanner())
           this.qrScanner(new QrScanViewModel());
@@ -75,11 +94,7 @@ define([
 
         this.qrPromise = this.qrScanner().scan();
 
-        this.qrPromise.promise
-          .then(function (result) {
-            self.showScanQr(false);
-            self.loadFromJson(result);
-          })
+        return this.qrPromise.promise;
       }
 
       this.cancelQrScan = function () {

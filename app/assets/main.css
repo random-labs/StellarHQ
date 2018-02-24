@@ -149,7 +149,7 @@ body a {
   height: 0;
 }
 
-#qrcode {
+.qrcode {
   text-align: center;
 }
 
