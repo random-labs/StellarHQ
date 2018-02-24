@@ -125,11 +125,15 @@ body a {
 }
 
 .signature {
-  margin-top: 15px;
+  margin: 15px 0;
   background: #ff8686;
   padding: 5px;
   color: white;
   text-align: center;
+}
+
+#xdrLink {
+  font-size: .6em;
 }
 
 .signature.signed {

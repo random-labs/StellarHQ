@@ -38,6 +38,16 @@ define([
       return count;
     }, this);
 
+    this.xdrUrl = ko.pureComputed(function () {
+      var isTestNet = true;
+      var url = "https://www.stellar.org/laboratory/#xdr-viewer?input=" +
+        encodeURIComponent(this.xdr()) + "&type=TransactionEnvelope"
+
+      url += isTestNet ? "&network=test" : "&network=public";
+
+      return url;
+    }, this);
+
     this.newOperation = function () {
       var newOp = new OperationViewModel();
       this.currentOperation(newOp);

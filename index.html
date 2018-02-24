@@ -70,6 +70,7 @@
 
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
                   css: { signed: isSigned() }"></div>
+                <a id="xdrLink" target="_blank" data-bind="attr: { href: xdrUrl }">Check XDR on Stellar Lab</a>
                 <textarea data-bind=" value: xdr" placeholder="Transaction XDR" readonly></textarea>
               </div>
             </div>
