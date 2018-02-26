@@ -75,9 +75,8 @@
                 <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
                 <input type="button" data-bind="click: createQr, enable: xdr" value="Create QR">
                 <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
-                <div class="status" data-bind="if: status">
-                  <div data-bind="text: status"></div>
-                  <a data-bind="if: tranUrl, attr: { href: tranUrl }">View Transaction on Stellar.org</a>
+                <div data-bind="if: status()">
+                  <div class="status" data-bind="text: status().message, css: status().isError === true? 'error' : 'success'"></div>
                 </div>
 
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',

@@ -100,37 +100,49 @@ define([
 
     this.signTransaction = function () {
       console.log('Signing Transaction...');
-      var sourceKeypair = StellarSdk.Keypair.fromSecret(this.secretKey());
+      self.setStatus('Signing Transaction...');
 
-      this.transaction().sign(sourceKeypair);
+      try {
+        var sourceKeypair = StellarSdk.Keypair.fromSecret(this.secretKey());
 
-      this.isSigned(true);
-      this.xdr(this.transaction().toEnvelope().toXDR('base64'));
+        this.transaction().sign(sourceKeypair);
 
-      if (self.qrCode()) {
-        self.createQr();
+        this.isSigned(true);
+        this.xdr(this.transaction().toEnvelope().toXDR('base64'));
+
+        if (self.qrCode()) {
+          self.createQr();
+        }
+
+        self.setStatus('Transaction Signed!');
+
+        console.log('Done!');
+        console.log('Signed Transaction XDR: ');
+        console.log(this.xdr());
+        console.log();
+      } catch (error) {
+        self.setStatus('Error Signing Transaction: ' + error.message, true);
+        console.log('Error signing transaction!');
+        console.log(error);
       }
-
-      console.log('Done!');
-      console.log('Signed Transaction XDR: ');
-      console.log(this.xdr());
-      console.log();
     }
 
     this.sendTransaction = function () {
 
       console.log('Submitting transaction...');
-      self.status('Submitting transaction...');
+      self.setStatus('Submitting transaction...');
 
       server.submitTransaction(this.transaction())
         .then(function (transactionResult) {
           console.log('\nSuccess! View the transaction at: ');
           console.log(transactionResult._links.transaction.href);
-          self.status("Transaction Submitted!");
+          self.setStatus("Transaction Submitted!");
           self.tranUrl(transactionResult._links.transaction.href);
         })
         .catch(function (err) {
-          console.log('An error has occured:');
+          var error = err.data.extras.result_codes.transaction;
+          self.setStatus('Error Submitting Transaction: ' + error, true);
+          console.log('Error Submitting Transaction...');
           console.log(err);
         });
     }
@@ -162,6 +174,13 @@ define([
       };
 
       self.qrCode(util.generateQRCode(JSON.stringify(transaction)));
+    }
+
+    this.setStatus = function (message, isError) {
+      this.status({
+        message: message,
+        isError: isError
+      })
     }
   }
 

@@ -128,6 +128,16 @@ body a {
   margin: 10px 0;
 }
 
+.status.error {
+  background: #ffc5c5;
+  border: 1px solid red;
+}
+
+.status.success {
+  border: 1px solid #10a70b;
+  background: #b9ffb6;
+}
+
 .signature {
   margin: 15px 0;
   background: #ff8686;
