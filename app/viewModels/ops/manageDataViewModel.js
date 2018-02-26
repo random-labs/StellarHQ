@@ -7,7 +7,7 @@ define([
   util,
   ko
 ) {
-  function ManageDataOperation() {
+  function ManageDataViewModel() {
     this.payload = ko.observable();
     this.type = "manageData";
     this.description = "Manage Data";
@@ -54,5 +54,5 @@ define([
     }
   }
 
-  return ManageDataOperation
+  return ManageDataViewModel
 });

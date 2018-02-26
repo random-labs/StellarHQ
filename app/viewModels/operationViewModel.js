@@ -1,12 +1,12 @@
 define([
   'knockout',
-  'models/ops/manageData'
+  'viewModels/ops/manageDataViewModel'
 ], function (ko,
-  ManageDataOperation
+  ManageDataViewModel
 ) {
   function OperationViewModel() {
     this.operationTypes = ko.observableArray([
-      new ManageDataOperation()
+      new ManageDataViewModel()
     ]);
 
     this.selectedOperation = ko.observable();
