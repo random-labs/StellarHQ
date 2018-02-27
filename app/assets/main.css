@@ -116,7 +116,13 @@ body a {
   clear: both;
 }
 
+/* Operaions */
+
 .operations {}
+
+div#keyValuePairs input {
+  width: 49%;
+}
 
 #opSelect {
   font-size: .8em;

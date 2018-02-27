@@ -52,15 +52,6 @@ define([
     return resultholder[""] || resultholder;
   };
 
-  function isJson(data) {
-    try {
-      JSON.parse(data);
-    } catch (e) {
-      return false;
-    }
-    return true;
-  }
-
   function isOnline() {
     return navigator.onLine;
   }
@@ -97,7 +88,6 @@ define([
     b64DecodeUnicode: b64DecodeUnicode,
     flatten: flatten,
     unflatten: unflatten,
-    isJson: isJson,
     isOnline: isOnline,
     downloadFile: downloadFile,
     uploadFile: uploadFile,

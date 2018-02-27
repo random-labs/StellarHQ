@@ -8,38 +8,65 @@ define([
   ko
 ) {
   function ManageDataViewModel() {
-    this.payload = ko.observable();
+    var self = this;
+
+    this.json = ko.observable();
+    this.isJson = ko.observable(false);
+    this.keyValuePairs = ko.observableArray([{
+      key: null,
+      value: null
+    }]);
+
     this.type = "manageData";
     this.description = "Manage Data";
 
     this.stellarOps = [];
 
     this.build = function () {
-      if (util.isJson(this.payload())) {
-        this.stellarOps = buildDataFromJson(this.payload());
+      if (this.isJson()) {
+        this.stellarOps = this.buildDataFromJson(this.json());
       } else {
-        this.stellarOps = buildData(this.payload());
+        this.stellarOps = this.buildData(this.keyValuePairs());
       }
     }
 
-    function buildData(payload) {
+    this.valueChanged = function () {
+      var isValid = true;
+
+      self.keyValuePairs().forEach(function (pair) {
+        if (!pair.key || !pair.value) {
+          isValid = false
+          return;
+        }
+      });
+
+      if (isValid)
+        self.keyValuePairs.push({
+          key: null,
+          value: null
+        });
+    }
+
+    this.toggleJson = function () {
+      this.isJson(!this.isJson());
+    }
+
+    this.buildData = function (keyValuePairs) {
       var operations = [];
-      var splitPayload = payload.split('\n');
 
-      for (let i = 0; i < splitPayload.length; i += 2) {
-        var key = splitPayload[i];
-        var value = splitPayload[i + 1];
-
-        operations.push(StellarSdk.Operation.manageData({
-          name: key,
-          value: value
-        }));
-      }
+      keyValuePairs.forEach(function (pair) {
+        if (pair.key || pair.value) {
+          operations.push(StellarSdk.Operation.manageData({
+            name: pair.key,
+            value: pair.value
+          }));
+        }
+      });
 
       return operations;
     }
 
-    function buildDataFromJson(payload) {
+    this.buildDataFromJson = function (payload) {
       var operations = [];
       var flatJson = util.flatten(JSON.parse(payload));
 

@@ -111,7 +111,14 @@
 
   <!-- OPERATION TEMPLATES -->
   <script type="text/html" id="manageData">
-    <textarea data-bind="value: payload, valueUpdate: 'afterkeydown'" placeholder="Data Value&#10;&#10;Enter key/value one per line&#10;Accepts Json Objects"></textarea>
+    <input type="button" class="pullLeft" data-bind="click: toggleJson, value: isJson() ? 'Add Key Value' : 'Add Json'">
+    <div data-bind="visible: !isJson()">
+      <div id="keyValuePairs" data-bind="foreach: keyValuePairs">
+        <input type="text" data-bind="value: key, valueUpdate: 'afterkeydown', event:{ input: $parent.valueChanged}" placeholder="Key">
+        <input type="text" data-bind="value: value, valueUpdate: 'afterkeydown', event:{ input: $parent.valueChanged}" placeholder="Value">
+      </div>
+    </div>
+    <textarea data-bind="value: json, valueUpdate: 'afterkeydown', visible: isJson()" placeholder="Json Object"></textarea>
   </script>
 
   <script type="text/html" id="payment">
