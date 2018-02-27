@@ -100,6 +100,7 @@
         <div>Add New Operation</div>
         <div data-bind="with: currentOperation">
           <select id="opSelect" data-bind="options: operationTypes, value: selectedOperation, optionsText: 'description'"></select>
+          <hr>
           <div data-bind="template: { name: selectedOperation().type, data:selectedOperation}"></div>
           <input type="button" data-bind="click: saveOperation" value="Save Operation">
           <input type="button" data-bind="click: cancelOperation" value="Cancel">
