@@ -113,6 +113,13 @@
     <textarea data-bind="value: payload, valueUpdate: 'afterkeydown'" placeholder="Data Value&#10;&#10;Enter key/value one per line&#10;Accepts Json Objects"></textarea>
   </script>
 
+  <script type="text/html" id="payment">
+    <input type="text" data-bind="value: payload().destination, valueUpdate: 'afterkeydown'" placeholder="Destination Address: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+    <input type="text" value="Native (XLM)" readonly>
+    <input type="number" data-bind="value: payload().amount, valueUpdate: 'afterkeydown'" placeholder="Amount">
+  </script>
+
+
   <!-- SCAN QR TEMPLATE -->
   <script type="text/html" id="qr-scan-template">
     <div class="overlay qr">
