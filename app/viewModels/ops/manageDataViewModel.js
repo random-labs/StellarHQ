@@ -34,7 +34,7 @@ define([
       var isValid = true;
 
       self.keyValuePairs().forEach(function (pair) {
-        if (!pair.key || !pair.value) {
+        if (!pair.key) {
           isValid = false
           return;
         }
@@ -55,7 +55,7 @@ define([
       var operations = [];
 
       keyValuePairs.forEach(function (pair) {
-        if (pair.key || pair.value) {
+        if (pair.key) {
           operations.push(StellarSdk.Operation.manageData({
             name: pair.key,
             value: pair.value
