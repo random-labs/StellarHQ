@@ -133,7 +133,7 @@ define([
       server.submitTransaction(this.transaction())
         .then(function (transactionResult) {
           console.log("Transaction Submitted!");
-          self.tranUrl(transactionResult._links.transaction.href);
+          self.tranUrl('https://testnet.steexp.com/tx/' + transactionResult.hash);
         })
         .catch(function (err) {
           var error = err.data.extras.result_codes.transaction;

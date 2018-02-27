@@ -75,7 +75,7 @@
                 <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
                 <input type="button" data-bind="click: createQr, enable: xdr" value="Create QR">
                 <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
-                <a class="link" target="_blank" data-bind="if: tranUrl, attr: { href: tranUrl }">View Transaction on Stellar.org</a>
+                <a class="link" target="_blank" data-bind="if: tranUrl, attr: { href: tranUrl }">View transaction on steexp.com</a>
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
                   css: { signed: isSigned() }"></div>
                 <a class="link" target="_blank" data-bind="attr: { href: xdrUrl }">Check XDR on Stellar Lab</a>
