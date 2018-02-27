@@ -124,17 +124,20 @@ body a {
 
 .status {
   border: 1px solid rgb(199, 199, 199);
-  padding: 5px;
-  margin: 10px 0;
+  padding: 10px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .status.error {
   background: #ffc5c5;
-  border: 1px solid red;
+  border-top: 1px solid red;
 }
 
 .status.success {
-  border: 1px solid #10a70b;
+  border-top: 1px solid #10a70b;
   background: #b9ffb6;
 }
 
@@ -210,6 +213,7 @@ body a {
   padding: 5px;
   border-radius: 0 5px 5px 5px;
   opacity: 0;
+  margin-bottom: 50px;
 }
 
 [type=radio]:checked~.tab-label {

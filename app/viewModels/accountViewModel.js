@@ -44,7 +44,7 @@ define([
             return account;
           })
           .catch(function (e) {
-            console.error(e);
+            console.error('Error Loading Account: ' + e.toString());
           });
       }
 

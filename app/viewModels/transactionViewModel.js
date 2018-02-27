@@ -24,7 +24,6 @@ define([
     this.numStellarOps = ko.observable(0);
     this.transaction = ko.observable();
     this.isSigned = ko.observable(false);
-    this.status = ko.observable();
     this.xdr = ko.observable();
     this.qrCode = ko.observable();
     this.isImported = ko.observable(false);
@@ -57,12 +56,18 @@ define([
           var newOperation = self.currentOperation().build();
 
           self.currentOperations.push(newOperation);
+
+          console.log(self.currentOperation()
+            .selectedOperation().description +
+            ' Operation Added!');
+
           self.currentOperation(null);
         })
         .catch(function (error) {
-          if (error) {
-            console.error(error);
-            self.status("Error creating Operation: " + error.message)
+          if (error !== undefined) {
+            console.error('Error Creating ' + self.currentOperation()
+              .selectedOperation().description +
+              ' Operation: ' + error.toString(), true);
           }
 
           self.currentOperation(null);
@@ -74,21 +79,23 @@ define([
       transactionBuilder = new StellarSdk.TransactionBuilder(account);
 
       console.log('Building Transaction...');
+
       this.currentOperations().forEach(op => {
         op.stellarOps.forEach(sop => {
           transactionBuilder.addOperation(sop);
         });
       });
 
-      this.transaction(transactionBuilder.build());
+      try {
+        this.transaction(transactionBuilder.build());
 
-      this.xdr(this.transaction().toEnvelope().toXDR('base64'));
-      this.isSigned(false);
+        this.xdr(this.transaction().toEnvelope().toXDR('base64'));
+        this.isSigned(false);
 
-      console.log('Done!');
-      console.log('Transaction XDR: ');
-      console.log(this.xdr());
-      console.log();
+        console.log('Transaction Built!');
+      } catch (error) {
+        console.error('Error building Transaction: ' + error.toString());
+      }
     }
 
     this.loadTransaction = function (existingTransaction) {
@@ -100,7 +107,6 @@ define([
 
     this.signTransaction = function () {
       console.log('Signing Transaction...');
-      self.setStatus('Signing Transaction...');
 
       try {
         var sourceKeypair = StellarSdk.Keypair.fromSecret(this.secretKey());
@@ -114,36 +120,24 @@ define([
           self.createQr();
         }
 
-        self.setStatus('Transaction Signed!');
-
-        console.log('Done!');
-        console.log('Signed Transaction XDR: ');
-        console.log(this.xdr());
-        console.log();
+        console.log('Transaction Signed!');
       } catch (error) {
-        self.setStatus('Error Signing Transaction: ' + error.message, true);
-        console.log('Error signing transaction!');
-        console.log(error);
+        console.error('Error Signing Transaction: ' + error.toString());
       }
     }
 
     this.sendTransaction = function () {
 
       console.log('Submitting transaction...');
-      self.setStatus('Submitting transaction...');
 
       server.submitTransaction(this.transaction())
         .then(function (transactionResult) {
-          console.log('\nSuccess! View the transaction at: ');
-          console.log(transactionResult._links.transaction.href);
-          self.setStatus("Transaction Submitted!");
+          console.log("Transaction Submitted!");
           self.tranUrl(transactionResult._links.transaction.href);
         })
         .catch(function (err) {
           var error = err.data.extras.result_codes.transaction;
-          self.setStatus('Error Submitting Transaction: ' + error, true);
-          console.log('Error Submitting Transaction...');
-          console.log(err);
+          console.error('Error Submitting Transaction: ' + error);
         });
     }
 
@@ -174,13 +168,6 @@ define([
       };
 
       self.qrCode(util.generateQRCode(JSON.stringify(transaction)));
-    }
-
-    this.setStatus = function (message, isError) {
-      this.status({
-        message: message,
-        isError: isError
-      })
     }
   }
 
