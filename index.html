@@ -52,7 +52,7 @@
         <div class="tab">
           <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
           <label class="tab-label" for="tab-2">Create Transaction</label>
-          <div class="tabcontent">
+          <div class="tabcontent" data-bind="if: accountTab() == 'transactions'">
             <input type="button" data-bind="click: newTransaction, enable: publicKey" value="New Transaction">
             <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
             <label for="transactionImport" class="importFile">Import Transaction</label>
