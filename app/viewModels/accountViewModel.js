@@ -31,7 +31,7 @@ define([
         this.accountTab = ko.observable("transactions");
 
       this.connect = function () {
-        if (!util.isOnline())
+        if (!util.isOnline() || !this.publicKey())
           return Promise.resolve();
 
         return server.loadAccount(this.publicKey())
@@ -40,6 +40,9 @@ define([
 
             self.account(account);
             self.getAccountData(account);
+
+            if (self.transaction())
+              self.transaction().refreshSequenceNumber(account.sequenceNumber());
 
             return account;
           })
@@ -51,7 +54,7 @@ define([
       this.newTransaction = function () {
         this.connect()
           .then(function (account) {
-            self.transaction(new TransactionViewModel(self.publicKey(),
+            self.transaction(new TransactionViewModel(self.publicKey,
               account ? account.sequenceNumber() : null, server));
           });
       }

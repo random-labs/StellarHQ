@@ -37,6 +37,12 @@ define([
       return count;
     }, this);
 
+    this.canBuildTransaction = ko.pureComputed(function () {
+      return (self.currentOperations().length > 0 &&
+          self.publicKey() && self.sequenceNumber()) ||
+        self.isImported();
+    }, this);
+
     this.xdrUrl = ko.pureComputed(function () {
       var isTestNet = true;
       var url = "https://www.stellar.org/laboratory/#xdr-viewer?input=" +
@@ -74,8 +80,12 @@ define([
         });
     }
 
+    this.refreshSequenceNumber = function (newSeqNumber) {
+      this.sequenceNumber(newSeqNumber);
+    }
+
     this.buildTransaction = function () {
-      var account = new StellarSdk.Account(this.publicKey, this.sequenceNumber());
+      var account = new StellarSdk.Account(this.publicKey(), this.sequenceNumber());
       transactionBuilder = new StellarSdk.TransactionBuilder(account);
 
       console.log('Building Transaction...');

@@ -38,7 +38,7 @@
       <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
       <div class="input-group">
         <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
-        <input type="button" data-bind="click: connect, visible: $parent.isOnline, enable: publicKey" value="Connect">
+        <input type="button" data-bind="value: account() ? 'Refresh' : 'Connect', click: connect, visible: $parent.isOnline, enable: publicKey">
         <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
         <input type="button" data-bind="click: createQr, enable: publicKey" value="Create QR">
       </div>
@@ -58,15 +58,15 @@
           <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
           <label class="tab-label" for="tab-2">Create Transaction</label>
           <div class="tabcontent" data-bind="if: accountTab() == 'transactions'">
-            <input type="button" data-bind="click: newTransaction, enable: publicKey" value="New Transaction">
+            <input type="button" data-bind="click: newTransaction" value="New Transaction">
             <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
             <label for="transactionImport" class="importFile">Import Transaction</label>
             <input type="button" data-bind="click: scanTransactionQr" value="Scan Transaction QR">
             <div data-bind=" with: transaction">
               <div class="newTransaction" data-bind="if: !isImported()">
-                <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
-                <input type="button" data-bind="click: newOperation, enable: sequenceNumber" value="New Operation">
-                <input type="button" data-bind="click: buildTransaction, enable: currentOperations().length> 0 || isImported" value="Build Transaction">
+                <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown'" placeholder="Transaction Sequence Number">
+                <input type="button" data-bind="click: newOperation" value="New Operation">
+                <input type="button" data-bind="click: buildTransaction, enable: canBuildTransaction()" value="Build Transaction">
               </div>
               <div class="operations clearfix" data-bind="visible: currentOperations().length > 0">
                 <span data-bind="text: numStellarOps" id="numStellarOps"></span>
