@@ -44,6 +44,7 @@
           <input type="radio" id="tab-1" name="tab-group-1" value="details" data-bind="checked: accountTab">
           <label class="tab-label" for="tab-1">View Account</label>
           <div class="tabcontent">
+            <div>Data Fields:</div>
             <textarea data-bind="value: accountData, enable: publicKey" placeholder="Account Data" readonly></textarea>
             <input type="button" data-bind="click: connect, enable: publicKey" value="Refresh">
           </div>
@@ -56,7 +57,7 @@
             <input type="button" data-bind="click: newTransaction, enable: publicKey" value="New Transaction">
             <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
             <label for="transactionImport" class="importFile">Import Transaction</label>
-            <input type="button" data-bind="click: scanTransactionQr" value="Scan QR">
+            <input type="button" data-bind="click: scanTransactionQr" value="Scan Transaction QR">
             <div data-bind=" with: transaction">
               <div class="newTransaction" data-bind="if: !isImported()">
                 <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown', enable: publicKey" placeholder="Transaction Sequence Number">
@@ -73,12 +74,12 @@
                 <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
                 <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
                 <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
-                <input type="button" data-bind="click: createQr, enable: xdr" value="Create QR">
+                <input type="button" data-bind="click: createQr, enable: xdr" value="Create Transaction QR">
                 <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
                 <a class="link" target="_blank" data-bind="if: tranUrl, attr: { href: tranUrl }">View transaction on steexp.com</a>
                 <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
                   css: { signed: isSigned() }"></div>
-                <a class="link" target="_blank" data-bind="attr: { href: xdrUrl }">Check XDR on Stellar Lab</a>
+                <a class="link" target="_blank" data-bind="attr: { href: xdrUrl }, visible: isOnline">Check XDR on Stellar Lab</a>
                 <textarea data-bind=" value: xdr" placeholder="Transaction XDR" readonly></textarea>
               </div>
             </div>

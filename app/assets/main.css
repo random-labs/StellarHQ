@@ -125,7 +125,8 @@ div#keyValuePairs input {
 }
 
 #opSelect {
-  font-size: .8em;
+  font-size: .9em;
+  margin-top: 25px;
 }
 
 .status {
@@ -241,6 +242,8 @@ div#keyValuePairs input {
   bottom: 0;
   background: rgba(199, 199, 199, 0.685);
   z-index: 3;
+  padding: 10% 0;
+  overflow: auto;
 }
 
 .overlay .content {
@@ -250,8 +253,6 @@ div#keyValuePairs input {
   border-radius: 5px;
   padding: 10px;
   position: relative;
-  top: 50%;
-  transform: translateY(-50%);
 }
 
 .overlay.qr .content {
