@@ -43,7 +43,7 @@ require([
       }
     }
 
-    xmlHttp.open("GET", 'https://api.github.com/repos/zanderadam/stellarhq/git/refs/heads/master', true);
+    xmlHttp.open("GET", 'https://api.github.com/repos/lumenaut-network/stellarhq/git/refs/heads/master', true);
     xmlHttp.send(null);
   });
 });

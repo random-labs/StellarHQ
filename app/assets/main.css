@@ -10,6 +10,17 @@ body {
 
 .header {
   height: 50px;
+  margin-bottom: 15px;
+}
+
+.lumen {
+  font-size: .55em;
+}
+
+.lumen a {
+  display: inline;
+  color: #08b5e5;
+  text-decoration: none;
 }
 
 .logo {
