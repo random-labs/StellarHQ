@@ -21,19 +21,37 @@
     </div>
   </div>
 
-  <div class="header">
-    <span class="logo">
-      <span>Stellar</span>
-    </span>
-    <div id="servertoggle">
-      Test Server
-    </div>
-    <div class="lumen">
-      <span>Part of</span>
-      <a href="https://lumenaut.net/" taget="_blank">Lumenaut Network</a>
-    </div>
+  <div data-bind="template: { name: 'app-template'}">
+    <div class="loader"></div>
   </div>
-  <div class="content">
+
+  <!-- APP TEMPLATE -->
+  <script type="text/html" id="app-template">
+    <div class="header">
+      <span class="logo">
+        <span>Stellar</span>
+      </span>
+      <div id="servertoggle">
+        Test Server
+      </div>
+      <div class="lumen">
+        <span>Part of</span>
+        <a href="https://lumenaut.net/" taget="_blank">Lumenaut Network</a>
+      </div>
+    </div>
+    <div class="content" data-bind="visible: true">
+      <div data-bind="template: { name: 'account-template'}">
+        <div class="loader"></div>
+      </div>
+    </div>
+
+    <div data-bind="if: status()">
+      <div class="status" data-bind="text: status().message, css: status().isError === true? 'error' : 'success'"></div>
+    </div>
+  </script>
+
+  <!-- ACCOUNT TEMPLATE -->
+  <script type="text/html" id="account-template">
     <div data-bind="with: account">
       <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
       <div class="input-group">
@@ -92,11 +110,7 @@
         <div id="clear" style="clear:both;"></div>
       </div>
     </div>
-  </div>
-
-  <div data-bind="if: status()">
-    <div class="status" data-bind="text: status().message, css: status().isError === true? 'error' : 'success'"></div>
-  </div>
+  </script>
 
   <!-- ADD OPERATION TEMPLATE -->
   <script type="text/html" id="add-operation-template">
@@ -115,6 +129,8 @@
   </script>
 
   <!-- OPERATION TEMPLATES -->
+
+  <!-- MANDAGE DATA OPERATION TEMPLATE -->
   <script type="text/html" id="manageData">
     <input type="button" class="pullLeft" data-bind="click: toggleJson, value: isJson() ? 'Add Key Value' : 'Add Json'">
     <div data-bind="visible: !isJson()">
@@ -126,12 +142,14 @@
     <textarea data-bind="value: json, valueUpdate: 'afterkeydown', visible: isJson()" placeholder="Json Object"></textarea>
   </script>
 
+  <!-- PAYMENT OPERATION TEMPLATE -->
   <script type="text/html" id="payment">
     <input type="text" data-bind="value: payload().destination, valueUpdate: 'afterkeydown'" placeholder="Destination Address: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
     <input type="text" value="Native (XLM)" readonly>
     <input type="number" data-bind="value: payload().amount, valueUpdate: 'afterkeydown'" placeholder="Amount">
   </script>
 
+  <!-- END OPERATION TEMPLATES -->
 
   <!-- SCAN QR TEMPLATE -->
   <script type="text/html" id="qr-scan-template">
