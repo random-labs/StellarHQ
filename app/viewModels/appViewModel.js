@@ -20,14 +20,33 @@ define([
       if (this.isOnline)
         server = new StellarSdk.Server('https://horizon-testnet.stellar.org');
 
-      this.account = new AccountViewModel(server);
-
       this.setStatus = function (message, isError) {
         this.status({
           message: message,
           isError: isError
         });
       }
+
+      this.getBuildOptions = function () {
+        if (!window.location.search)
+          return;
+
+        var str = window.location.search;
+        var objURL = {};
+
+        str.replace(
+          new RegExp("([^?=&]+)(=([^&]*))?", "g"),
+          function ($0, $1, $2, $3) {
+            objURL[$1] = $3;
+          }
+        );
+
+        window.history.replaceState({}, document.title, "/StellarHQ/");
+
+        return objURL;
+      }
+
+      this.account = new AccountViewModel(server, this.getBuildOptions());
 
       window.console = (function (wCon) {
         return {

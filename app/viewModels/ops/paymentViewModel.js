@@ -7,12 +7,19 @@ define([
   util,
   ko
 ) {
-  function PaymentViewModel() {
+  function PaymentViewModel(buildOptions) {
     this.payload = ko.observable({
       destination: null,
       asset: StellarSdk.Asset.native(),
       amount: null
     });
+
+    if (buildOptions) {
+      var payload = this.payload();
+      payload.destination = buildOptions.destination;
+      payload.amount = buildOptions.amount;
+    }
+
     this.type = "payment";
     this.description = "Payment";
 

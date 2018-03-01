@@ -12,23 +12,24 @@ define([
     TransactionViewModel,
     QrScanViewModel) {
 
-    function AccountViewModel(server) {
+    function AccountViewModel(server, buildOptions) {
       var self = this;
       var server = server;
 
       this.publicKey = ko.observable("");
       this.secretKey = ko.observable("")
+      this.buildOptions = buildOptions;
 
       this.account = ko.observable();
       this.accountData = ko.observable();
-      this.transaction = ko.observable();
+      this.transaction = ko.observable(null);
       this.accountTab = ko.observable("details");
       this.showScanQr = ko.observable(false);
       this.qrScanner = ko.observable();
       this.qrCode = ko.observable();
 
       if (!util.isOnline())
-        this.accountTab = ko.observable("transactions");
+        this.accountTab("transactions");
 
       this.connect = function () {
         if (!util.isOnline() || !this.publicKey())
@@ -55,7 +56,8 @@ define([
         this.connect()
           .then(function (account) {
             self.transaction(new TransactionViewModel(self.publicKey,
-              account ? account.sequenceNumber() : null, server));
+              account ? account.sequenceNumber() : null, server, self.buildOptions));
+            self.buildOptions = null; //clear buildOptions for future transactions
           });
       }
 
@@ -128,6 +130,11 @@ define([
         newTransaction.loadTransaction(parsedTran);
 
         self.transaction(newTransaction);
+      }
+
+      if (buildOptions) {
+        this.accountTab("transactions");
+        self.newTransaction();
       }
     }
 

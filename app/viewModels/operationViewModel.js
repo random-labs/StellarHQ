@@ -7,13 +7,16 @@ define([
   PaymentViewModel,
   ManageDataViewModel
 ) {
-  function OperationViewModel() {
+  function OperationViewModel(buildOptions) {
     this.operationTypes = ko.observableArray([
-      new PaymentViewModel(),
-      new ManageDataViewModel()
+      new PaymentViewModel(buildOptions),
+      new ManageDataViewModel(buildOptions)
     ]);
 
     this.selectedOperation = ko.observable();
+
+    if (buildOptions)
+      this.selectedOperation(buildOptions.op);
 
     this.promise = new Promise(function (save, cancel) {
       self.save = save;

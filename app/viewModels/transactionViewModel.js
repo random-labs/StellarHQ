@@ -9,7 +9,7 @@ define([
   ko,
   OperationViewModel) {
 
-  function TransactionViewModel(publicKey, sequenceNumber, server) {
+  function TransactionViewModel(publicKey, sequenceNumber, server, buildOptions) {
     var self = this;
 
     var transactionBuilder;
@@ -54,7 +54,7 @@ define([
     }, this);
 
     this.newOperation = function () {
-      var newOp = new OperationViewModel();
+      var newOp = new OperationViewModel(buildOptions);
       this.currentOperation(newOp);
 
       newOp.promise
@@ -179,6 +179,9 @@ define([
 
       self.qrCode(util.generateQRCode(JSON.stringify(transaction)));
     }
+
+    if (buildOptions)
+      self.newOperation();
   }
 
   return TransactionViewModel;
