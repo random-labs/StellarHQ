@@ -8,6 +8,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" media="screen" href="app/assets/main.css" />
   <link rel="stylesheet" type="text/css" media="screen" href="app/assets/mobile.css" />
+  <!-- credit for starfield to: https://codepen.io/saransh/pen/BKJun -->
+  <link rel="stylesheet" type="text/css" media="screen" href="app/assets/starfield.min.css" />
   <script data-main="app/app" src="bower_components/requirejs/require.js"></script>
 </head>
 
@@ -27,21 +29,28 @@
 
   <!-- APP TEMPLATE -->
   <script type="text/html" id="app-template">
-    <div class="header">
-      <span class="logo">
-        <span>Stellar</span>
-      </span>
-      <div id="servertoggle">
-        Test Server
-      </div>
-      <div class="lumen">
-        <span>Part of</span>
-        <a href="https://lumenaut.net/" taget="_blank">Lumenaut Network</a>
-      </div>
+    <div id="background">
+      <div id="stars"></div>
+      <div id="stars2"></div>
+      <div id="stars3"></div>
     </div>
-    <div class="content" data-bind="visible: true">
-      <div data-bind="template: { name: 'account-template'}">
-        <div class="loader"></div>
+    <div data-bind="css: {initial: isInitial }">
+      <div class="content" data-bind="visible: true">
+        <div class="header">
+          <span class="logo">
+            <span class="name">Stellar</span>
+            <div class="lumen">
+              <span>Part of</span>
+              <a href="https://lumenaut.net/" taget="_blank">Lumenaut Network</a>
+            </div>
+          </span>
+          <div id="servertoggle">
+            Test Server
+          </div>
+        </div>
+        <div data-bind="template: { name: 'account-template'}">
+          <div class="loader"></div>
+        </div>
       </div>
     </div>
 
@@ -53,61 +62,65 @@
   <!-- ACCOUNT TEMPLATE -->
   <script type="text/html" id="account-template">
     <div data-bind="with: account">
-      <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
-      <div class="input-group">
-        <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
-        <input type="button" data-bind="value: account() ? 'Refresh' : 'Connect', click: connect, visible: $parent.isOnline, enable: publicKey">
-        <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
-        <input type="button" data-bind="click: createQr, enable: publicKey" value="Create QR">
-      </div>
-      <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
-      <div class="tabs">
-        <div class="tab" data-bind="visible: account && $parent.isOnline">
-          <input type="radio" id="tab-1" name="tab-group-1" value="details" data-bind="checked: accountTab">
-          <label class="tab-label" for="tab-1">View Account</label>
-          <div class="tabcontent">
-            <div>Data Fields:</div>
-            <textarea data-bind="value: accountData, enable: publicKey" placeholder="Account Data" readonly></textarea>
-            <input type="button" data-bind="click: connect, enable: publicKey" value="Refresh">
-          </div>
+      <div id="accountView">
+        <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
+        <div class="input-group">
+          <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" name="publickey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+          <input type="button" data-bind="value: account() ? 'Refresh' : 'Connect', click: connect, visible: $parent.isOnline, enable: publicKey">
+          <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
+          <input type="button" data-bind="click: createQr, enable: publicKey" value="Create QR">
         </div>
+        <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
+      </div>
+      <div id="tabsView">
+        <div class="tabs">
+          <div class="tab" data-bind="visible: account && $parent.isOnline">
+            <input type="radio" id="tab-1" name="tab-group-1" value="details" data-bind="checked: accountTab">
+            <label class="tab-label" for="tab-1">View Account</label>
+            <div class="tabcontent">
+              <div>Data Fields:</div>
+              <textarea data-bind="value: accountData, enable: publicKey" placeholder="Account Data" readonly></textarea>
+              <input type="button" data-bind="click: connect, enable: publicKey" value="Refresh">
+            </div>
+          </div>
 
-        <div class="tab">
-          <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
-          <label class="tab-label" for="tab-2">Create Transaction</label>
-          <div class="tabcontent" data-bind="if: accountTab() == 'transactions'">
-            <input type="button" data-bind="click: newTransaction" value="New Transaction">
-            <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
-            <label for="transactionImport" class="importFile">Import Transaction</label>
-            <input type="button" data-bind="click: scanTransactionQr" value="Scan Transaction QR">
-            <div data-bind=" with: transaction">
-              <div class="newTransaction" data-bind="if: !isImported()">
-                <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown'" placeholder="Transaction Sequence Number">
-                <input type="button" data-bind="click: newOperation" value="New Operation">
-                <input type="button" data-bind="click: buildTransaction, enable: canBuildTransaction()" value="Build Transaction">
-              </div>
-              <div class="operations clearfix" data-bind="visible: currentOperations().length > 0">
-                <span data-bind="text: numStellarOps" id="numStellarOps"></span>
-              </div>
-              <div data-bind="template: { name: 'add-operation-template', if: currentOperation}"></div>
+          <div class="tab">
+            <input type="radio" id="tab-2" name="tab-group-1" value="transactions" data-bind="checked: accountTab">
+            <label class="tab-label" for="tab-2">Create Transaction</label>
+            <div class="tabcontent" data-bind="if: accountTab() == 'transactions'">
+              <input type="button" data-bind="click: newTransaction" value="New Transaction">
+              <input type="file" id="transactionImport" data-bind="event: {change: importTransaction}" value="Import Transaction">
+              <label for="transactionImport" class="importFile">Import Transaction</label>
+              <input type="button" data-bind="click: scanTransactionQr" value="Scan Transaction QR">
+              <div data-bind=" with: transaction">
+                <div class="newTransaction" data-bind="if: !isImported()">
+                  <input type="number" data-bind="value: sequenceNumber, valueUpdate: 'afterkeydown'" placeholder="Transaction Sequence Number">
+                  <input type="button" data-bind="click: newOperation" value="New Operation">
+                  <input type="button" data-bind="click: buildTransaction, enable: canBuildTransaction()" value="Build Transaction">
+                </div>
+                <div class="operations clearfix" data-bind="visible: currentOperations().length > 0">
+                  <span data-bind="text: numStellarOps" id="numStellarOps"></span>
+                </div>
+                <div data-bind="template: { name: 'add-operation-template', if: currentOperation}"></div>
 
-              <div data-bind="if: xdr">
-                <input type="password" data-bind="value: secretKey, valueUpdate: 'afterkeydown'" placeholder="Secret Key: Example: SBMA2Y2WUSFH3HFH7C3BFHJIZZGNOKU3THPCLYS3V6IB2LWV5HQFH56M">
-                <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
-                <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
-                <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
-                <input type="button" data-bind="click: createQr, enable: xdr" value="Create Transaction QR">
-                <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
-                <a class="link" target="_blank" data-bind="if: tranUrl, attr: { href: tranUrl }">View transaction on steexp.com</a>
-                <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
-                  css: { signed: isSigned() }"></div>
-                <a class="link" target="_blank" data-bind="attr: { href: xdrUrl }, visible: isOnline">Check XDR on Stellar Lab</a>
-                <textarea data-bind=" value: xdr" placeholder="Transaction XDR" readonly></textarea>
+                <div data-bind="if: xdr">
+                  <input type="password" data-bind="value: secretKey, valueUpdate: 'afterkeydown'" placeholder="Secret Key: Example: SBMA2Y2WUSFH3HFH7C3BFHJIZZGNOKU3THPCLYS3V6IB2LWV5HQFH56M">
+                  <input type="button" data-bind="click: signTransaction, enable: secretKey" value="Sign Transaction">
+                  <input type="button" data-bind="click: sendTransaction, visible: isOnline, enable: isSigned()" value="Submit Transaction">
+                  <input type="button" data-bind="click: exportTransaction, enable: xdr" value="Export Transaction">
+                  <input type="button" data-bind="click: createQr, enable: xdr" value="Create Transaction QR">
+                  <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
+                  <a class="link" target="_blank" data-bind="if: tranUrl, attr: { href: tranUrl }">View transaction on steexp.com</a>
+                  <div class="signature" data-bind="text: isSigned() ? 'SIGNED' : 'UNSIGNED',
+                        css: { signed: isSigned() }"></div>
+                  <a class="link" target="_blank" data-bind="attr: { href: xdrUrl }, visible: isOnline">Check XDR on Stellar Lab</a>
+                  <textarea data-bind=" value: xdr" placeholder="Transaction XDR" readonly></textarea>
+                </div>
               </div>
             </div>
           </div>
+          <div id="clear" style="clear:both;"></div>
         </div>
-        <div id="clear" style="clear:both;"></div>
       </div>
     </div>
   </script>
@@ -144,7 +157,7 @@
 
   <!-- PAYMENT OPERATION TEMPLATE -->
   <script type="text/html" id="payment">
-    <input type="text" data-bind="value: payload().destination, valueUpdate: 'afterkeydown'" placeholder="Destination Address: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+    <input type="text" data-bind="value: payload().destination, valueUpdate: 'afterkeydown'" name="paymentDestination" placeholder="Destination Address: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
     <input type="text" value="Native (XLM)" readonly>
     <input type="number" data-bind="value: payload().amount, valueUpdate: 'afterkeydown'" placeholder="Amount">
   </script>

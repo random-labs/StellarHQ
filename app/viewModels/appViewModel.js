@@ -31,6 +31,11 @@ define([
 
       this.account = new AccountViewModel(server, urlParseService.buildData());
 
+      this.isInitial = ko.pureComputed(function () {
+        return (self.isOnline && !self.account.account() &&
+          !urlParseService.buildData());
+      }, this);
+
       window.console = (function (wCon) {
         return {
           log: function (text) {

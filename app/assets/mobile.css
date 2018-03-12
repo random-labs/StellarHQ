@@ -3,6 +3,12 @@ only screen and (max-device-width: 720px) {
   #servertoggle {
     font-size: .8em;
   }
+  .initial .logo {
+    top: 20vh;
+    left: 50vw;
+    transform: translateX(-50%);
+    font-size: 3em;
+  }
   input[type=button],
   .importFile {
     width: 100%;

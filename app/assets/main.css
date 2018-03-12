@@ -2,6 +2,53 @@ body {
   font-family: monospace;
   color: rgb(66, 66, 66);
   font-size: 1.5em;
+  margin: 0;
+}
+
+#accountView {
+  padding: 10px;
+  transition: all 200ms linear;
+}
+
+.logo {
+  text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+  padding: 10px;
+  transform: translateX(0);
+  transition: all 200ms linear;
+}
+
+.initial #accountView {
+  margin-top: 40vh;
+  height: 60vh;
+  text-align: center;
+}
+
+.initial .logo {
+  top: 20vh;
+  width: 100%;
+  font-size: 4em;
+}
+
+.initial .content {
+  overflow: hidden;
+  max-height: 100vh;
+}
+
+.initial .lumen {
+  font-size: .2em;
+}
+
+#background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
 }
 
 #refresh {
@@ -9,17 +56,19 @@ body {
 }
 
 .header {
-  height: 50px;
   margin-bottom: 15px;
+  height: 50px;
+  color: rgb(255, 255, 255);
 }
 
 .lumen {
-  font-size: .55em;
+  text-align: center;
+  font-size: .37em;
 }
 
 .lumen a {
   display: inline;
-  color: #08b5e5;
+  color: white;
   text-decoration: none;
 }
 
@@ -29,13 +78,14 @@ body {
   font-size: 1.5em;
 }
 
-.logo span::after {
+.logo .name::after {
+  color: rgb(255, 255, 255);
   content: "HQ";
-  color: rgb(66, 66, 66);
 }
 
 .content {
-  width: 95%;
+  position: relative;
+  max-width: 920px;
   margin: auto;
 }
 
@@ -82,7 +132,7 @@ input[type=button],
   margin: 10px 0;
   font-size: .8em;
   background: #08b5e5;
-  border: 1px solid rgb(199, 199, 199);
+  border: 0;
   border-radius: 5px;
   cursor: pointer;
   font-family: monospace;
@@ -195,6 +245,11 @@ div#keyValuePairs input {
 
 /* tabs */
 
+#tabsView {
+  height: 100vh;
+  background: white;
+}
+
 .tabs {
   position: relative;
   min-height: 200px;
@@ -228,7 +283,7 @@ div#keyValuePairs input {
   left: 0;
   background: white;
   right: 0;
-  padding: 5px;
+  padding: 10px;
   border-radius: 0 5px 5px 5px;
   opacity: 0;
   margin-bottom: 50px;
