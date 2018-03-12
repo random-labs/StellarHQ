@@ -3,14 +3,16 @@ define([
     'util',
     'knockout',
     'viewModels/transactionViewModel',
-    'viewModels/qrScanViewModel'
+    'viewModels/qrScanViewModel',
+    'services/urlParseService'
   ],
   function (
     StellarSdk,
     util,
     ko,
     TransactionViewModel,
-    QrScanViewModel) {
+    QrScanViewModel,
+    urlParseService) {
 
     function AccountViewModel(server, buildOptions) {
       var self = this;
@@ -57,7 +59,7 @@ define([
           .then(function (account) {
             self.transaction(new TransactionViewModel(self.publicKey,
               account ? account.sequenceNumber() : null, server, self.buildOptions));
-            self.buildOptions = null; //clear buildOptions for future transactions
+            urlParseService.reset(); //clear buildOptions for future transactions
           });
       }
 
