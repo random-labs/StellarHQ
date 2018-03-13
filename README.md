@@ -1,7 +1,11 @@
 # StellarHQ
 
 >Currently under active development. Unexpected features are to be expected.
-
+  
+Use [Stellar Lab](https://www.stellar.org/laboratory/#account-creator?network=test) to create test accounts
+  
+---
+  
 Account Manager and Transaction Builder for Stellar. 
 Built for community, by community. Free like beer.
 
