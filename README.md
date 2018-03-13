@@ -18,21 +18,22 @@ The app can also be used in offline mode without access to the Internet. Clone o
 * Export the transaction file to submit the transaction later or send to other devices.  
 * Supports multisig. Pass along the transaction via the QR code or exported file for others to sign.  
 
-##  Offline Mode - How to create and sign the transactions offline, send online ##
+##  Offline Mode ##
+**How to create and sign the transactions offline, send online**
 
 1. Copy and paste your public key into the **Public Key** field. Alternatively you can scan a QR code that contains your Public Key by clicking on **Scan QR**
-2. Click on **New Transaction**. 
-3. You will have to provide the Transaction Sequence Number for your account. This can be obtained in two ways:
+2. Click on **New Transaction**
+3. Click on **New Operation**
+4. Select desired Transaction Operation and fill in the necessary information
+5. Click **Save Operation**
+6. Add any additional Operations - up to 100 max per transaction
+7. Before you can build the transaction you will have to provide the Transaction Sequence Number for your account. This can be obtained in two ways:
     1. Use the online app via your mobile or another device:
         1. Copy and paste your public key into the **Public Key** field. Alternatively you can scan a QR code that contains your Public Key by clicking on **Scan QR**. Clicking on **Create QR** will create a code of the entered Public Key. This can be useful for obtaining the Transaction Sequence Number when generating transactions on another device in Offline Mode.
         2. Click on **Create Transaction** tab
         3. Click on **New Transaction**  
     2. Use [Stellar Lab](https://www.stellar.org/laboratory/#txbuilder) to get the next sequence number. Note that Stellar Lab shows an incremented number therefore you have to subtract 1 before entering it into StellarHQ.
-4. Enter the new Transaction Sequence Number,
-5. Click on **New Operation**
-6. Select desired Transaction Operation and fill in the necessary information
-7. Click **Save Operation**
-8. Add any additional Operations - up to 100 max per transaction
+8. Enter the new Transaction Sequence Number,
 9. Click on **Build Transaction**  
   This will build the Transaction XDR and prepare for signing. 
 10. Copy and paste your Secret Key into the **Secret Key** field. This will eventually support Ledger Nano.
@@ -59,7 +60,8 @@ The app can also be used in offline mode without access to the Internet. Clone o
         3. Paste Transaction XDR
         4. Click **Submit**
         
-##  Online Mode - How to create, sign and send transactions online ##
+##  Online Mode ##
+**How to create, sign and send transactions online**
   
 Full online mode can potentially expose your key if your device has any security issues, use at your own risk. Transactions can be built online then exported and loaded into offline device for signing before being reimported into online mode to be submitted.
   
@@ -76,6 +78,22 @@ Full online mode can potentially expose your key if your device has any security
 9. Copy and paste your Secret Key into the **Secret Key** field. This will eventually support Ledger Nano.
 10. Click on **Sign Transaction**. The transaction will now be signed as indicated by the green "SIGNED" status.
 11. Click on **Submit Transaction** to submit. You can view the transaction on steexp.com by clicking on **View transaction on steexp.com**
+
+##  Mixed Mode ##
+**How to create and send online, while signing offline**
+
+1. Follow **Online Mode** steps 1-8 to build the transaction
+2. Export unsiged transaction:
+    1. If your offline device has a camera you can scan the QR Code:
+        1. Click on "Create Transaction QR" on the online device
+        2. On the offline device click on "Scan Transaction QR"
+        3. Scan the QR code to transfer the XDR to offline device 
+        4. Follow **Offline Mode** steps 6-12
+    2. Export XDR file
+        1. Click "Export Transaction" on the online device
+        2. Move the file to the offline device using a USB drive or other methods
+        3. On the offline device click on "Import Transaction" and load the exported file
+        4. Follow **Offline Mode** steps 6-12
 
 ## Multisig ## 
 
