@@ -5,6 +5,10 @@ body {
   margin: 0;
 }
 
+.pullright {
+  float: right;
+}
+
 #accountView {
   padding: 10px;
   transition: all 200ms linear;
@@ -81,6 +85,19 @@ body {
 .logo .name::after {
   color: rgb(255, 255, 255);
   content: "HQ";
+}
+
+#help {
+  background: #08b5e5;
+  padding: 5px;
+  width: 20px;
+  height: 20px;
+  margin-left: 5px;
+  display: inline-block;
+  text-decoration: none;
+  color: white;
+  border-radius: 25px;
+  text-align: center;
 }
 
 .content {
