@@ -17,7 +17,7 @@ define([], function () {
   }
 
   function reset() {
-    window.history.replaceState({}, document.title, "/StellarHQ/");
+    window.history.replaceState({}, document.title, "/");
   }
 
   return {
