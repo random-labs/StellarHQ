@@ -152,14 +152,14 @@ define([
     }
 
     this.exportTransaction = function () {
-      var publicKeyShort = this.publicKey.substring(0, 5) + '-' + this.publicKey.slice(-5);
+      var publicKeyShort = this.publicKey().substring(0, 5) + '-' + this.publicKey().slice(-5);
       var date = new Date();
       var dateTag = date.getFullYear() + ("0" + (date.getMonth() + 1)).slice(-2) +
         ("0" + date.getDate()).slice(-2) + ("0" + date.getHours() + 1).slice(-2) +
         ("0" + date.getMinutes()).slice(-2) + ("0" + date.getSeconds()).slice(-2);
 
       var transaction = {
-        pK: this.publicKey,
+        pK: this.publicKey(),
         iS: this.isSigned(),
         xdr: this.xdr()
       };
@@ -172,7 +172,7 @@ define([
 
     this.createQr = function () {
       var transaction = {
-        pK: this.publicKey,
+        pK: this.publicKey(),
         iS: this.isSigned(),
         xdr: this.xdr()
       };
