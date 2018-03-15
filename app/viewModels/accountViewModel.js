@@ -44,6 +44,10 @@ define([
             self.account(account);
             self.getAccountData(account);
 
+            self.buildOptions.account = {
+              data: JSON.parse(self.accountData())
+            };
+
             if (self.transaction())
               self.transaction().refreshSequenceNumber(account.sequenceNumber());
 
