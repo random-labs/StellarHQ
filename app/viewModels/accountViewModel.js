@@ -119,8 +119,6 @@ define([
           data[key] = decodedValue;
         });
 
-        var data = util.unflatten(data);
-
         self.accountData(JSON.stringify(data, null, '  '));
       }
 
