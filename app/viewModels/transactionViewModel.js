@@ -180,7 +180,7 @@ define([
       self.qrCode(util.generateQRCode(JSON.stringify(transaction)));
     }
 
-    if (buildOptions)
+    if (buildOptions.op)
       self.newOperation();
   }
 

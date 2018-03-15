@@ -14,16 +14,15 @@ define([
       amount: null
     });
 
-    if (buildOptions) {
+    this.type = "payment";
+    this.description = "Payment";
+    this.stellarOps = [];
+
+    if (buildOptions.op == this.type) {
       var payload = this.payload();
       payload.destination = buildOptions.destination;
       payload.amount = buildOptions.amount;
     }
-
-    this.type = "payment";
-    this.description = "Payment";
-
-    this.stellarOps = [];
 
     this.build = function () {
       var paymentOp = StellarSdk.Operation.payment(this.payload());

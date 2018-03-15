@@ -15,7 +15,7 @@ define([
 
     this.selectedOperation = ko.observable();
 
-    if (buildOptions)
+    if (buildOptions.op)
       this.selectedOperation(buildOptions.op);
 
     this.promise = new Promise(function (save, cancel) {

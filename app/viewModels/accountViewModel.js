@@ -20,7 +20,7 @@ define([
 
       this.publicKey = ko.observable("");
       this.secretKey = ko.observable("")
-      this.buildOptions = buildOptions;
+      this.buildOptions = buildOptions ? buildOptions : {};
 
       this.account = ko.observable();
       this.accountData = ko.observable();
