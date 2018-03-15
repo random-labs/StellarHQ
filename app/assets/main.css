@@ -171,6 +171,16 @@ input[type=button]:disabled {
   cursor: default;
 }
 
+input.error {
+  border: 1px solid #e50808;
+  background: #ffd8d8;
+}
+
+div.error {
+  color: #e50808;
+  font-size: .6em;
+}
+
 body a {
   display: block;
 }

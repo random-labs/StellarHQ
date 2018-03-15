@@ -128,7 +128,8 @@
           <select id="opSelect" data-bind="options: operationTypes, value: selectedOperation, optionsText: 'description'"></select>
           <hr>
           <div data-bind="template: { name: selectedOperation().type, data:selectedOperation}"></div>
-          <input type="button" data-bind="click: saveOperation" value="Save Operation">
+          <input type="button" data-bind="click: saveOperation, enable: selectedOperation().isValid ? selectedOperation().isValid : true"
+            value="Save Operation">
           <input type="button" data-bind="click: cancelOperation" value="Cancel">
         </div>
       </div>

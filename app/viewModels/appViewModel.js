@@ -2,13 +2,15 @@ define([
     'knockout',
     'viewModels/accountViewModel',
     'util',
-    'services/urlParseService'
+    'services/urlParseService',
+    'services/validationService'
   ],
   function (
     ko,
     AccountViewModel,
     util,
-    urlParseService
+    urlParseService,
+    validationService
   ) {
     return function appViewModel() {
       var self = this;
