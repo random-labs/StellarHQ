@@ -138,7 +138,7 @@
 
   <!-- OPERATION TEMPLATES -->
 
-  <!-- MANDAGE DATA OPERATION TEMPLATE -->
+  <!-- MANAGE DATA OPERATION TEMPLATE -->
   <script type="text/html" id="manageData">
     <input type="button" class="pullLeft" data-bind="click: toggleJson, value: isJson() ? 'Add Key Value' : 'Add Json'">
     <div data-bind="visible: !isJson()">
@@ -155,6 +155,35 @@
     <input type="text" data-bind="value: payload().destination, valueUpdate: 'afterkeydown'" name="paymentDestination" placeholder="Destination Address: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
     <input type="text" value="Native (XLM)" readonly>
     <input type="number" data-bind="value: payload().amount, valueUpdate: 'afterkeydown'" placeholder="Amount">
+  </script>
+
+  <!-- MANAGE LUMENAUT DONATION TEMPLATE -->
+  <script type="text/html" id="donation">
+    <div>
+      <div class="pullright">
+        <span>Total Donated:</span>
+        <input type="number" id="totaldonation" data-bind="value: total">
+        <span>%</span>
+      </div>
+      <input type="button" class="pullLeft" data-bind="click: newDonation" value="New Donation">
+      <div id="donations" data-bind="foreach: donations">
+        <div class="donation" data-bind="visible: !isRemoved()">
+          <span class="pullright remove" data-bind="click: $parent.remove">X</span>
+          <div class="rightmargin">
+            <input type="text" data-bind="value: destination, valueUpdate: 'afterkeydown', event:{ input: $parent.valueChanged}, css: { error: destination.showError()}"
+              placeholder="Destination Address: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+            <div class="error" data-bind="text: destination.errorMessage(), visible: destination.showError()"></div>
+          </div>
+          <div class="rightmargin">
+            <input type="range" min="0" max="100" step="0.1" data-bind="value: percentage, valueUpdate: 'input', event:{ input: $parent.valueChanged}">
+            <div class="pullright">
+              <input type="number" min="0" max="100" data-bind="value: percentage, valueUpdate: 'input', event:{ input: $parent.valueChanged}">
+              <span>%</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </script>
 
   <!-- END OPERATION TEMPLATES -->

@@ -202,8 +202,82 @@ body a {
 
 .operations {}
 
+/* Data Fields */
+
 div#keyValuePairs input {
   width: 49%;
+}
+
+/* Donations */
+
+#donations input[type="range"] {
+  width: 80%;
+  height: 5px;
+  background: rgb(199, 199, 199);
+  outline: none;
+  border-radius: 5px;
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 25px 0;
+}
+
+#donations input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  background: #08b5e5;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+#donations input[type="range"]::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  background: #08b5e5;
+  cursor: pointer;
+  border-radius: 25px;
+}
+
+#donations input[type="number"] {
+  width: 80px;
+}
+
+#donations span.remove {
+  width: 10px;
+  height: 10px;
+  background: #e50808;
+  text-align: center;
+  padding: 5px;
+  border-radius: 25px;
+  cursor: pointer;
+  color: white;
+  font-weight: bold;
+  font-size: .5em;
+}
+
+#donations span.remove:hover {
+  background: #920707;
+}
+
+#totaldonation {
+  width: 80px;
+}
+
+#totaldonation::before {
+  content: "Total Donated: ";
+  width: 100px;
+  background: red;
+}
+
+.donation {
+  border: 1px solid rgb(199, 199, 199);
+  padding: 5px;
+  margin: 2px;
+}
+
+.rightmargin {
+  margin-right: 35px;
 }
 
 #opSelect {

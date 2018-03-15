@@ -1,16 +1,19 @@
 define([
   'knockout',
   'viewModels/ops/paymentViewModel',
-  'viewModels/ops/manageDataViewModel'
+  'viewModels/ops/manageDataViewModel',
+  'viewModels/ops/donationViewModel'
 ], function (
   ko,
   PaymentViewModel,
-  ManageDataViewModel
+  ManageDataViewModel,
+  ManageDonationViewModel
 ) {
   function OperationViewModel(buildOptions) {
     this.operationTypes = ko.observableArray([
       new PaymentViewModel(buildOptions),
-      new ManageDataViewModel(buildOptions)
+      new ManageDataViewModel(buildOptions),
+      new ManageDonationViewModel(buildOptions)
     ]);
 
     this.selectedOperation = ko.observable();
