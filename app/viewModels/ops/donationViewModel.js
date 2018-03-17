@@ -17,13 +17,12 @@ define([
       isRemoved: ko.observable(false)
     }]);
 
-    self.type = 'donation';
-    self.description = 'Lumenaut Donation';
     self.stellarOps = [];
     var prefix = 'lumenaut.net donation ';
 
-    var data = buildOptions.account.data;
-    if (data) {
+    if (buildOptions.account && buildOptions.account.data) {
+      var data = buildOptions.account.data;
+
       var validDonations = [];
 
       Object.keys(data).forEach(function (key) {
@@ -147,8 +146,7 @@ define([
         }));
       });
 
-      self.stellarOps = operations;
-      console.log(operations);
+      return operations;
     }
   }
 

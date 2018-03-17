@@ -59,11 +59,13 @@ define([
       }
 
       this.newTransaction = function () {
+
         this.connect()
           .then(function (account) {
             self.transaction(new TransactionViewModel(self.publicKey,
               account ? account.sequenceNumber() : null, server, self.buildOptions));
-            urlParseService.reset(); //clear buildOptions for future transactions
+            //clear url since transaction to handle it created
+            urlParseService.reset();
           });
       }
 

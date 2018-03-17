@@ -10,13 +10,41 @@ define([
   ManageDonationViewModel
 ) {
   function OperationViewModel(buildOptions) {
-    this.operationTypes = ko.observableArray([
-      new PaymentViewModel(buildOptions),
-      new ManageDataViewModel(buildOptions),
-      new ManageDonationViewModel(buildOptions)
+    var self = this;
+
+    this.currentOperation = ko.observable();
+    this.operationTypes = ko.observableArray([{
+        type: 'payment',
+        description: "Payment",
+        build: function (opType) {
+          return new PaymentViewModel(buildOptions, opType)
+        }
+      },
+      {
+        type: 'data',
+        description: "Manage Data",
+        build: function (opType) {
+          return new ManageDataViewModel(buildOptions)
+        }
+      },
+      {
+        type: 'donation',
+        description: "Lumenaut Inflation Donation",
+        build: function (opType) {
+          return new ManageDonationViewModel(buildOptions, opType)
+        }
+      }
     ]);
 
     this.selectedOperation = ko.observable();
+    this.selectedOperation.subscribe(selectedType => {
+      var op = this.operationTypes().find(op => {
+        return op.type == selectedType;
+      });
+
+      if (op)
+        self.currentOperation(op.build(selectedType));
+    });
 
     if (buildOptions.op)
       this.selectedOperation(buildOptions.op);
@@ -34,12 +62,8 @@ define([
       self.cancel();
     }
 
-
     this.build = function () {
-      var selectedOp = this.selectedOperation();
-      selectedOp.build();
-
-      return selectedOp;
+      return this.currentOperation().build();
     }
   }
 

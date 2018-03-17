@@ -30,11 +30,7 @@ define([
     this.tranUrl = ko.observable();
 
     this.numStellarOps = ko.pureComputed(function () {
-      var count = 0;
-      this.currentOperations().forEach(e => {
-        count += e.stellarOps.length;
-      });
-      return count;
+      return self.currentOperations().length;
     }, this);
 
     this.canBuildTransaction = ko.pureComputed(function () {
@@ -59,13 +55,9 @@ define([
 
       newOp.promise
         .then(function () {
-          var newOperation = self.currentOperation().build();
+          var stellarOps = self.currentOperation().build();
 
-          self.currentOperations.push(newOperation);
-
-          console.log(self.currentOperation()
-            .selectedOperation().description +
-            ' Operation Added!');
+          self.currentOperations(self.currentOperations().concat(stellarOps))
 
           self.currentOperation(null);
         })
@@ -91,9 +83,7 @@ define([
       console.log('Building Transaction...');
 
       this.currentOperations().forEach(op => {
-        op.stellarOps.forEach(sop => {
-          transactionBuilder.addOperation(sop);
-        });
+        transactionBuilder.addOperation(op);
       });
 
       try {
@@ -180,8 +170,10 @@ define([
       self.qrCode(util.generateQRCode(JSON.stringify(transaction)));
     }
 
-    if (buildOptions.op)
+    if (buildOptions.op) {
       self.newOperation();
+      buildOptions = {};
+    }
   }
 
   return TransactionViewModel;

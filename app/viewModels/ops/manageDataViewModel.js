@@ -17,16 +17,11 @@ define([
       value: null
     }]);
 
-    this.type = "manageData";
-    this.description = "Manage Data";
-
-    this.stellarOps = [];
-
     this.build = function () {
       if (this.isJson()) {
-        this.stellarOps = this.buildDataFromJson(this.json());
+        return this.buildDataFromJson(this.json());
       } else {
-        this.stellarOps = this.buildData(this.keyValuePairs());
+        return this.buildData(this.keyValuePairs());
       }
     }
 
