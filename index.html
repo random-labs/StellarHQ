@@ -193,6 +193,13 @@
     <div class="error" data-bind="text: source.errorMessage(), visible: source.showError()"></div>
   </script>
 
+  <!-- ACCOUNT OPTIONS TEMPLATE -->
+  <script type="text/html" id="options">
+    <input type="text" data-bind="value: inflationDest, valueUpdate: 'afterkeydown', event:{ input: $parent.valueChanged}, css: { error: inflationDest.showError()}"
+      placeholder="Inflation Destination: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+    <div class="error" data-bind="text: inflationDest.errorMessage(), visible: inflationDest.showError()"></div>
+  </script>
+
   <!-- END OPERATION TEMPLATES -->
 
   <!-- SCAN QR TEMPLATE -->
