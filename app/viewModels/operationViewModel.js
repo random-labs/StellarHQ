@@ -3,13 +3,15 @@ define([
   'viewModels/ops/paymentViewModel',
   'viewModels/ops/manageDataViewModel',
   'viewModels/ops/donationViewModel',
-  'viewModels/ops/inflationViewModel'
+  'viewModels/ops/inflationViewModel',
+  'viewModels/ops/optionsViewModel'
 ], function (
   ko,
   PaymentViewModel,
   ManageDataViewModel,
   ManageDonationViewModel,
-  InflationViewModel
+  InflationViewModel,
+  OptionsViewModel
 ) {
   function OperationViewModel(buildOptions) {
     var self = this;
@@ -34,6 +36,13 @@ define([
         description: "Lumenaut Inflation Donation",
         build: function (opType) {
           return new ManageDonationViewModel(buildOptions, opType)
+        }
+      },
+      {
+        type: 'options',
+        description: "Account Options",
+        build: function (opType) {
+          return new OptionsViewModel(buildOptions, opType)
         }
       },
       {
