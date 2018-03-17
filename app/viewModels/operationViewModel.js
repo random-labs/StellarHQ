@@ -2,12 +2,14 @@ define([
   'knockout',
   'viewModels/ops/paymentViewModel',
   'viewModels/ops/manageDataViewModel',
-  'viewModels/ops/donationViewModel'
+  'viewModels/ops/donationViewModel',
+  'viewModels/ops/inflationViewModel'
 ], function (
   ko,
   PaymentViewModel,
   ManageDataViewModel,
-  ManageDonationViewModel
+  ManageDonationViewModel,
+  InflationViewModel
 ) {
   function OperationViewModel(buildOptions) {
     var self = this;
@@ -32,6 +34,13 @@ define([
         description: "Lumenaut Inflation Donation",
         build: function (opType) {
           return new ManageDonationViewModel(buildOptions, opType)
+        }
+      },
+      {
+        type: 'inflation',
+        description: "Inflation",
+        build: function (opType) {
+          return new InflationViewModel(buildOptions, opType)
         }
       }
     ]);
