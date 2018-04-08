@@ -64,9 +64,7 @@
       <div id="accountView">
         <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
         <div class="input-group">
-          <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown', css: { error: publicKey.showError()}" id="publicKey"
-            name="publickey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
-          <div class="error" data-bind="text: publicKey.errorMessage(), visible: publicKey.showError()"></div>
+          <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" name="publickey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
 
           <input type="button" data-bind="value: account() ? 'Refresh' : 'Connect', click: connect, visible: $parent.isOnline, enable: publicKey">
           <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
