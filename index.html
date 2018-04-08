@@ -17,6 +17,11 @@
   <div data-bind="template: { name: 'app-template'}">
     <div class="loader"></div>
   </div>
+  <div class="disclaimer">
+    <span>StellarHQ is not affiliated with, endorsed by, or sponsored by</span>
+    <a href="https://www.stellar.org/">https://www.stellar.org/</a>
+    <span>or any of their affiliates or subsidiaries.</span>
+  </div>
 
   <!-- APP TEMPLATE -->
   <script type="text/html" id="app-template">
@@ -59,7 +64,10 @@
       <div id="accountView">
         <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
         <div class="input-group">
-          <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" name="publickey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+          <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown', css: { error: publicKey.showError()}" id="publicKey"
+            name="publickey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
+          <div class="error" data-bind="text: publicKey.errorMessage(), visible: publicKey.showError()"></div>
+
           <input type="button" data-bind="value: account() ? 'Refresh' : 'Connect', click: connect, visible: $parent.isOnline, enable: publicKey">
           <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
           <input type="button" data-bind="click: createQr, enable: publicKey" value="Create QR">
