@@ -1,5 +1,7 @@
 # StellarHQ
 
+>StellarHQ is not affiliated with, endorsed by, or sponsored by https://www.stellar.org/ or any of their affiliates or subsidiaries.
+  
 >Currently under active development. Unexpected features are to be expected.
   
 Use [Stellar Lab](https://www.stellar.org/laboratory/#account-creator?network=test) to create test accounts
