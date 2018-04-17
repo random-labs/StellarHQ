@@ -407,6 +407,10 @@ div#keyValuePairs input {
   overflow: auto;
 }
 
+.overlay .title {
+  margin-bottom: 25px;
+}
+
 .overlay .content {
   background: white;
   width: 80vw;
@@ -414,6 +418,10 @@ div#keyValuePairs input {
   border-radius: 5px;
   padding: 10px;
   position: relative;
+}
+
+.overlay input {
+  margin-bottom: 15px;
 }
 
 .overlay.qr .content {
@@ -474,6 +482,10 @@ div#keyValuePairs input {
 
 .disclaimer * {
   display: inline;
+}
+
+.note {
+  font-size: 12px;
 }
 
 @-webkit-keyframes load1 {

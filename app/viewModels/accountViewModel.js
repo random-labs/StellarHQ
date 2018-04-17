@@ -27,6 +27,7 @@ define([
       this.transaction = ko.observable(null);
       this.accountTab = ko.observable("details");
       this.showScanQr = ko.observable(false);
+      this.showNewAccount = ko.observable(false);
       this.qrScanner = ko.observable();
       this.qrCode = ko.observable();
 
@@ -116,6 +117,18 @@ define([
       this.cancelQrScan = function () {
         this.qrPromise.cancel();
         self.showScanQr(false);
+      }
+
+      this.newAccount = function () {
+        var pair = StellarSdk.Keypair.random();
+        self.publicKey(pair.publicKey());
+        self.secretKey(pair.secret());
+
+        self.showNewAccount(true);
+      }
+
+      this.cancelNewAccount = function () {
+        self.showNewAccount(false);
       }
 
       this.getAccountData = function (account) {

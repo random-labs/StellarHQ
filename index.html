@@ -63,12 +63,14 @@
     <div data-bind="with: account">
       <div id="accountView">
         <div data-bind="template: { name: 'qr-scan-template', if: showScanQr}"></div>
+        <div data-bind="template: { name: 'keygen-template', if:showNewAccount}"></div>
         <div class="input-group">
           <input type="text" data-bind="value: publicKey, valueUpdate: 'afterkeydown'" id="publicKey" name="publickey" placeholder="Public Key: Example: GB6KYVHI66U4AFHFE2ZJDSBPMTHYLLIK2FMMFL2AW5K3IOZG2EZYMVXR">
 
           <input type="button" data-bind="value: account() ? 'Refresh' : 'Connect', click: connect, visible: $parent.isOnline, enable: publicKey">
           <input type="button" data-bind="click: scanPublicKeyQr" value="Scan QR">
           <input type="button" data-bind="click: createQr, enable: publicKey" value="Create QR">
+          <input type="button" data-bind="click: newAccount" value="New Account">
         </div>
         <div class="qrcode" data-bind="qrCode, html: qrCode"></div>
       </div>
@@ -219,6 +221,24 @@
           <select data-bind="options: devices, value: selectedDevice, optionsText: 'description', visible: devices.length > 1"></select>
         </div>
         <input type="button" data-bind="click: cancelQrScan" value="Cancel">
+      </div>
+    </div>
+  </script>
+
+  <!-- GENERATE NEW ACCOUNT TEMPLATE -->
+  <script type="text/html" id="keygen-template">
+    <div class="overlay">
+      <div class="content">
+        <div class="title">New Key Pair</div>
+        <div>
+          <label for="">Public Key</label>
+          <input type="text" data-bind="value: publicKey" readonly>
+          <label for="">Secret Key</label>
+          <input type="text" data-bind="value: secretKey" readonly>
+          <div class="note">This is your private key. Do not share this with anyone. Store it in a safe location.</div>
+        </div>
+        <input type="button" data-bind="click: newAccount" value="Regenerate">
+        <input type="button" data-bind="click: cancelNewAccount" value="Close">
       </div>
     </div>
   </script>
