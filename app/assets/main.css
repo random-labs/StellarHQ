@@ -292,6 +292,7 @@ div#keyValuePairs input {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 5;
 }
 
 .status.error {
@@ -405,6 +406,7 @@ div#keyValuePairs input {
   z-index: 3;
   padding: 10% 0;
   overflow: auto;
+  text-align: left;
 }
 
 .overlay .title {
