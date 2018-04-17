@@ -59,13 +59,16 @@ define([
       }
 
       this.newTransaction = function () {
-
-        this.connect()
+        return this.connect()
           .then(function (account) {
-            self.transaction(new TransactionViewModel(self.publicKey,
-              account ? account.sequenceNumber() : null, server, self.buildOptions));
+            var newTransaction = new TransactionViewModel(self.publicKey,
+              account ? account.sequenceNumber() : null, server, self.buildOptions);
+
+            self.transaction(newTransaction);
             //clear url since transaction to handle it created
             urlParseService.reset();
+
+            return newTransaction;
           });
       }
 
@@ -132,10 +135,10 @@ define([
         var parsedTran = JSON.parse(data);
         self.publicKey(parsedTran.pK);
 
-        var newTransaction = new TransactionViewModel(self.publicKey(), null, server);
-        newTransaction.loadTransaction(parsedTran);
-
-        self.transaction(newTransaction);
+        self.newTransaction()
+          .then((newTransaction) => {
+            newTransaction.loadTransaction(parsedTran);
+          });
       }
 
       if (buildOptions) {
