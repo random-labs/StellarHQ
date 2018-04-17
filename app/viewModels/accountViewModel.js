@@ -16,7 +16,7 @@ define([
 
     function AccountViewModel(server, buildOptions) {
       var self = this;
-      var server = server;
+      self.server = server;
 
       this.publicKey = ko.observable("");
       this.secretKey = ko.observable("")
@@ -129,6 +129,14 @@ define([
 
       this.cancelNewAccount = function () {
         self.showNewAccount(false);
+      }
+
+      this.friendBot = function () {
+        self.server.friendbot(self.publicKey())
+          .call()
+          .then(function (resp) {
+            console.log('Funded by FriendBot');
+          })
       }
 
       this.getAccountData = function (account) {

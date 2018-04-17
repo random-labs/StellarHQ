@@ -237,6 +237,8 @@
           <label for="">Secret Key</label>
           <input type="text" data-bind="value: secretKey" readonly>
           <div class="note">This is your private key. Do not share this with anyone. Store it in a safe location.</div>
+          <div class="note">Before new account can be used you have to send at least 1 XLM to the new Public Address.</div>
+          <input type="button" data-bind="click: friendBot, visible: $parent.isOnline" value="Fund with Friendbot">
         </div>
         <input type="button" data-bind="click: newAccount" value="Regenerate">
         <input type="button" data-bind="click: cancelNewAccount" value="Close">
