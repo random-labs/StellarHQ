@@ -1,0 +1,22 @@
+{
+  "name": "stellarhq",
+  "version": "1.0.0",
+  "description": "Account Manager and Transaction Builder for Stellar",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZanderAdam/StellarHQ.git"
+  },
+  "author": "Aleksandar Adamovic",
+  "license": "SEE LICENSE IN LICENSE.txt",
+  "bugs": {
+    "url": "https://github.com/ZanderAdam/StellarHQ/issues"
+  },
+  "homepage": "https://github.com/ZanderAdam/StellarHQ#readme",
+  "dependencies": {
+    "gulp": "^3.9.1"
+  }
+}

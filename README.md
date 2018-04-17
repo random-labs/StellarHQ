@@ -6,8 +6,6 @@
   
 Use [Stellar Lab](https://www.stellar.org/laboratory/#account-creator?network=test) to create test accounts
   
----
-  
 Account Manager and Transaction Builder for Stellar. 
 Built for community, by community. Free like beer.
 
@@ -23,6 +21,19 @@ The app can also be used in offline mode without access to the Internet. Clone o
 * Scan the Transaction QR with your mobile device and easily submit the transaction.  
 * Export the transaction file to submit the transaction later or send to other devices.  
 * Supports multisig. Pass along the transaction via the QR code or exported file for others to sign.  
+  
+# Development
+
+After clone run:  
+`npm install --global sw-precache`  
+`npm install --global gulp`    
+`npm install`  
+`gulp init`  
+  
+`gulp init` will copy git hooks to .git dir . The pre-commit hook is used to automatically update service worker with any file changes. The service worker is used for caching. 
+
+
+# Getting Started
 
 ##  Offline Mode ##
 **How to create and sign the transactions offline, send online**
