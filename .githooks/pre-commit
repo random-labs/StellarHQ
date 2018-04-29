@@ -10,5 +10,5 @@
 # To enable this hook, rename this file to "applypatch-msg".
 
 echo 'post commit hook'
-sw-precache --static-file-globs='app/**/*'
-git add service-worker.js
+gulp build
+git add -A

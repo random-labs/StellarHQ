@@ -37,8 +37,8 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["app/app.js","70f3aaacf6c61abdd2d335ce16c03d35"],["app/assets/main.css","6b2ca7f644582c2f40effc40694685a2"],["app/assets/mobile.css","3bc94f5a500cdde1d0ade5485361965b"],["app/assets/starfield.min.css","e06337bb49dac182276764644e26e37b"],["app/helper/cancelablePromise.js","d41d8cd98f00b204e9800998ecf8427e"],["app/services/urlParseService.js","51c6862cb89ce05bfa5c566c89a5fcd0"],["app/services/validationService.js","6f2c1ea4862c96caa89570e12e44e3e8"],["app/util.js","5e5acb4cb2b7ac3b14f023f81ae92632"],["app/viewModels/accountViewModel.js","f4807b330f4d72ace1259bd9d525e501"],["app/viewModels/appViewModel.js","c96d7c93b6c5552f65515c96a8ba66e6"],["app/viewModels/operationViewModel.js","e6303ce0089e353b98a316ea7a66fa4e"],["app/viewModels/ops/donationViewModel.js","c56c74878b7084e9dea4c1c6ac75e198"],["app/viewModels/ops/inflationViewModel.js","1c23da159351842e9203b7f6d2c6ab24"],["app/viewModels/ops/manageDataViewModel.js","65f31c4da8a3b12585e45f232f71ed3e"],["app/viewModels/ops/optionsViewModel.js","bbb3d4ab19e008ce44368c74dee63e4a"],["app/viewModels/ops/paymentViewModel.js","0cbc55be58c85759cd4f8d5593692597"],["app/viewModels/qrScanViewModel.js","754cb817455260f7e27088cfbf159f6c"],["app/viewModels/transactionViewModel.js","1597f64ad91cebd4043fb5da7e464376"]];
-var cacheName = 'sw-precache-v3-sw-precache-' + (self.registration ? self.registration.scope : '');
+var precacheConfig = [["app/assets/main.css","6b2ca7f644582c2f40effc40694685a2"],["app/assets/mobile.css","3bc94f5a500cdde1d0ade5485361965b"],["app/assets/starfield.min.css","e06337bb49dac182276764644e26e37b"],["dist/app.js","ca4f7c37b21469665caa99731eb6820d"],["dist/require.js","e7199843dfd445bb66ec816e98a03214"],["index.html","6fabc4ec2f40e8c358ea65c16e09555c"]];
+var cacheName = 'sw-precache-v3--' + (self.registration ? self.registration.scope : '');
 
 
 var ignoreUrlParametersMatching = [/^utm_/];
