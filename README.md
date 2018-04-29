@@ -11,7 +11,11 @@ Built for community, by community. Free like beer.
 
 Available on: https://stellarhq.space  
   
-The app can also be used in offline mode without access to the Internet. Clone or download the [repo zip](https://github.com/Lumenaut-Network/StellarHQ/archive/master.zip) and move the files to your offline device. Start the app by double clicking on `index.html`. This will open the app in devices default browser.
+The app can also be used in offline mode without access to the Internet. THere are two ways to setup offline mode:
+  
+1. If you have a device with a [browser that supports servce workers](https://caniuse.com/#feat=serviceworkers) the app will be cached and work when your device is offline. Once you reconnect any app updated will be downloaded. You can use this to setup your offline device by visiting https://stellarhq.space to cache the app. 
+  
+2. Clone or download the [repo zip](https://github.com/Lumenaut-Network/StellarHQ/archive/master.zip) and move the files to your offline device. Start the app by double clicking on `index.html`. This will open the app in devices default browser.
 
 >This software provided under Apache 2.0 License without any warranty. By using this software you agree to these licensing terms.
   
@@ -25,13 +29,13 @@ The app can also be used in offline mode without access to the Internet. Clone o
 # Development
 
 After clone run:  
-`npm install --global sw-precache`  
-`npm install --global gulp`    
+`npm install --global gulp`   
+`npm install -g bower`   
 `npm install`  
+`bower install`  
 `gulp init`  
   
-`gulp init` will copy git hooks to .git dir . The pre-commit hook is used to automatically update service worker with any file changes. The service worker is used for caching. 
-
+`gulp init` will copy git hooks to `.git` dir. The pre-commit hook is used to automatically bundle the js files and update the service worker. The service worker is used for caching.
 
 # Getting Started
 
