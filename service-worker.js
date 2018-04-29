@@ -37,7 +37,7 @@
 /* eslint-disable indent, no-unused-vars, no-multiple-empty-lines, max-nested-callbacks, space-before-function-paren, quotes, comma-spacing */
 'use strict';
 
-var precacheConfig = [["app/assets/main.css","6b2ca7f644582c2f40effc40694685a2"],["app/assets/mobile.css","3bc94f5a500cdde1d0ade5485361965b"],["app/assets/starfield.min.css","e06337bb49dac182276764644e26e37b"],["dist/app.js","37944989c1455043c8370b9d203778a0"],["dist/require.js","e7199843dfd445bb66ec816e98a03214"],["index.html","6fabc4ec2f40e8c358ea65c16e09555c"]];
+var precacheConfig = [["app/assets/main.css","6b2ca7f644582c2f40effc40694685a2"],["app/assets/mobile.css","3bc94f5a500cdde1d0ade5485361965b"],["app/assets/starfield.min.css","e06337bb49dac182276764644e26e37b"],["dist/app.js","ca4f7c37b21469665caa99731eb6820d"],["dist/require.js","e7199843dfd445bb66ec816e98a03214"],["index.html","6fabc4ec2f40e8c358ea65c16e09555c"]];
 var cacheName = 'sw-precache-v3--' + (self.registration ? self.registration.scope : '');
 
 

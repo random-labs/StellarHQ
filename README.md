@@ -27,16 +27,20 @@ The app can also be used in offline mode without access to the Internet. THere a
 * Supports multisig. Pass along the transaction via the QR code or exported file for others to sign.  
   
 # Development
-
 After clone run:  
-`npm install --global gulp`   
-`npm install -g bower`   
-`npm install`  
-`bower install`  
-`gulp init`  
+```
+npm install --global gulp
+npm install -g bower 
+npm install
+bower install  
+gulp init
+gulp dev
+```
   
 `gulp init` will copy git hooks to `.git` dir. The pre-commit hook is used to automatically bundle the js files and update the service worker. The service worker is used for caching.
-
+  
+`gulp dev` will start the file watch and the local websever that will run the app on `http://localhost:5000/`. The file watch will automatically rerun the build while local webserver will automatically reload any file changes. 
+  
 # Getting Started
 
 ##  Offline Mode ##
