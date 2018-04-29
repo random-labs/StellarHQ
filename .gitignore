@@ -1,11 +1,2 @@
 bower_components/
 node_modules/
-
-!bower_components/**/*.min.js
-!bower_components/requirejs/*.js
-!bower_components/**/knockout.js
-!bower_components/**/domReady.js
-!bower_components/**/js/qrcode.js
-!bower_components/**/dist/jsQR.js
-
-
